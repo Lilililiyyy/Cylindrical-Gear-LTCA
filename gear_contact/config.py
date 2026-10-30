@@ -60,7 +60,7 @@ def analyze_config(config):
         if values.pop(name, False):
             raise ValueError("含外部回调的配置需要由Python调用方重新提供相应函数，不能仅凭JSON复现")
     allowed = {"torque_n_m", "material_pinion", "material_wheel", "modification_pinion", "modification_wheel",
-               "misalignment_m", "phases", "strips", "elastic_mode", "local_contact", "local_reference_depths_m"}
+               "misalignment_m", "phases", "strips", "phase_offset", "elastic_mode", "local_contact", "iso_settings", "extended_contact_settings", "local_reference_depths_m"}
     if set(values)-allowed:
         raise ValueError("含未知计算字段："+", ".join(sorted(set(values)-allowed)))
     return analyze_pair(pair, **values)

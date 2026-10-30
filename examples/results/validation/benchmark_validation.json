@@ -1,0 +1,88 @@
+{
+  "checked_at_utc": "2026-10-30T10:30:01.044489+00:00",
+  "case_count": 9,
+  "project_rotations": 288,
+  "own_values_recomputed": true,
+  "reference_own_values_used": false,
+  "masta_runtime_required": false,
+  "reference_binding_verified": true,
+  "same_inputs_as_reference": {
+    "helical_100_stage_1_external": true,
+    "helical_100_stage_3_sun_planet": true,
+    "helical_100_stage_3_internal": true,
+    "spur_100_stage_1_external": true,
+    "spur_100_stage_3_sun_planet": true,
+    "spur_100_stage_3_internal": true,
+    "helical_120_stage_1_external": true,
+    "helical_120_stage_3_sun_planet": true,
+    "helical_120_stage_3_internal": true
+  },
+  "input_check_scope": "同输入指案例config；完整数学问题等效性另由full_reference_problem_equivalent报告",
+  "full_reference_problem_equivalent": {
+    "helical_100_stage_1_external": false,
+    "helical_100_stage_3_sun_planet": false,
+    "helical_100_stage_3_internal": false,
+    "spur_100_stage_1_external": false,
+    "spur_100_stage_3_sun_planet": false,
+    "spur_100_stage_3_internal": false,
+    "helical_120_stage_1_external": false,
+    "helical_120_stage_3_sun_planet": false,
+    "helical_120_stage_3_internal": false
+  },
+  "common_fields": 108,
+  "common_fields_matched": 108,
+  "common_comparison_passed": true,
+  "response_difference_fields": 36,
+  "response_accuracy_verified": false,
+  "maximum_response_relative_errors": {
+    "max_endpoint_pressure_pa": 9.019961072691132e-07,
+    "mean_mesh_stiffness_n_per_m": 0.001218613264784279,
+    "mean_normal_approach_m": 4.64678232939724e-07,
+    "te_peak_to_peak_m": 6.847584168496542e-07
+  },
+  "comparison_values_within_tolerance": false,
+  "comparison_passed": false,
+  "physical_or_experimental_validation": false,
+  "elapsed_seconds": 6.10899999999674,
+  "reference_sha256": "90177fbb246826c377a48e65051c0be66855c23175313c67bc139f291695c8ed",
+  "manifest_sha256": "49ad17a86009dd0effbf102f428339133fa1a3a21513a9f9de2caa7e903fcc5c",
+  "kernel_sha256": {
+    "__init__.py": "a6bf5d04d1fb112226e446bfd293b6b05811489ca813e98e2af54674fc067bc3",
+    "__main__.py": "d7edbd907ef0f1795469903dbd22078d47e204da2a2bf59d9c416d5860882b74",
+    "analysis.py": "d096c5d46fe461da91e783a849e6bf5fe63d55b2cb1f956e76b9ca9417c8d2fc",
+    "config.py": "850f4ca8b125bb986706d18a4c0159eb9e6dbbff3bf3bf3416516b977fe5c946",
+    "contact_pressure.py": "de5b10add5d9784f6f0e6c87d3aab0f33dc02899ac3d7430ba2acadc63cb1bc7",
+    "design.py": "24a73a80f8852d619c2ee7f0c5e7fc59402331491bf49d22d014d6be004593a0",
+    "elasticity.py": "4a3f5ef03b3f51779f3b3daadd386777313e1d710b17e3d813a2f31d1efe2d4c",
+    "extended_contact.py": "a07dda04acba2583ab949aaef19ccb30ee52551367f555cfc3f3da4deb213898",
+    "geometry.py": "c2a543660a675c0fd56137fcd77e3f9b2944ededcbc787fe8319f11927251e76",
+    "hertz.py": "42d176167c94ddccb75e0c12feb1ac4fe7146638ad68c4acf29b350bd6c36aef",
+    "io.py": "a2e89171846d6ffa9a18c4334887ac231b5919065f636778e7d2dc5f4fc9e271",
+    "iso_contact.py": "431b8ce1e7c685070fa710bd6f4e8d1015767238e6504d890a250f7e720a94fb",
+    "plotting.py": "6bd22bb334676cc7cff721695aabf8814168b64b477c5eefa58b2c476166c416",
+    "solver.py": "98437bd348e0f37e20072f5c391654d8a337af69c1dc12be19071501db54399c",
+    "strength.py": "28e9a6cd9b4de68d99edd90d1a4e003085d0e0bb24b89d7cbf1ff982a131993a",
+    "surfaces.py": "1f0a582d451f0d4a6c57e0e9b0fae416af92ddaf678b226a489a0c6d9df5b05a"
+  },
+  "validation_tool_sha256": "652cc479c3741786fa5978d95904bd7c748449e2d70189a49bd8fc7b9e46f9c0",
+  "scope": "共同几何和法向载荷采用显式容差；按各案例config的几何相位独立求解，汇总TE、端点峰压和刚度差异。响应未设工程精度判据，comparison_passed不代表本次计算是否收敛或数值是否接近。",
+  "figures": [
+    "masta_ltca_comparison.png"
+  ],
+  "guard_tests": {
+    "count": 70,
+    "passed": true,
+    "command": "python -B -m unittest discover -s tests -v"
+  },
+  "snapshot_files_sha256": {
+    "case_validation.json": "f5af5cc778849bd47c05492a8ad9288af0b107b70fe653fa17ebe4201c5886f8",
+    "masta_comparison.json": "5d90a7a8c32c7da221f1fc34f3d7373ab05c28e69cd8e97ca2eaeff231cefcda",
+    "masta_comparison.csv": "75397a4f87aa3d3d15ad1cdf53c200a8c8282765203c9ffa9c638760c306c474",
+    "masta_ltca_comparison.png": "c4a59e49563e909018d24fbee5622c6a6c9b2b7ee9cefa6d8e4044fe08ff6fc1"
+  },
+  "validation_tools_sha256": {
+    "run_benchmarks.py": "652cc479c3741786fa5978d95904bd7c748449e2d70189a49bd8fc7b9e46f9c0",
+    "validate_cases.py": "04ae99d01bd82bb70c076b6ec84bbdfb70790ff6424c805eb61c1f86db4f5f8f",
+    "benchmark_plotting.py": "8efcf211b9fb241d7f180452593f46fe99dd2b498157d938aa553d496d3e7535"
+  }
+}

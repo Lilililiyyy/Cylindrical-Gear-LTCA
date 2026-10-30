@@ -1,0 +1,27 @@
+{
+  "native_image_sha256": "6f553658974589f45acf9fc50008b1b12e63b281a25d93a4489c04e99b2af7cb",
+  "native_image_unchanged": true,
+  "definition": "小轮一个齿通过程的最大接触压力分布，非单相位Hertz横向压力带",
+  "grid_shape_x_y": [
+    30,
+    30
+  ],
+  "reference_display_peak_pa": 186522329.40108263,
+  "project_display_peak_pa": 186524300.10156083,
+  "project_raw_endpoint_peak_pa": 186674381.6606236,
+  "project_raw_endpoint_count": 5166,
+  "project_profile_endpoint_count": 2590,
+  "project_uncovered_display_count": 60,
+  "project_interpolation": "双方未延伸的普通齿廓端点材料坐标上Delaunay线性三角插值；重复点取通过程最大值，延伸分支另存，凸包外不填零",
+  "scope": "显示面用于图义、坐标和分布比较；显示插值误差不替代原端点TE、刚度或峰压误差。",
+  "files": [
+    "07_masta_native_contact.png",
+    "07_project_contact_pass.png",
+    "07_project_contact_pass.svg",
+    "07_native_contact_comparison.png",
+    "07_native_contact_comparison.svg",
+    "07_project_contact_pass_samples.csv",
+    "07_contact_pass_data.npz",
+    "07_native_contact_metrics.json"
+  ]
+}

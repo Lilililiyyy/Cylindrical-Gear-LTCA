@@ -1,0 +1,157 @@
+{
+  "rows": [
+    {
+      "design": "无修形",
+      "operating_point": "轻载对中",
+      "torque_n_m": 40.0,
+      "misalignment_m": 0.0,
+      "te_peak_to_peak_um": 1.2699965015499437,
+      "max_pressure_mpa": 487.31159767480136,
+      "mean_stiffness_n_per_m": 641940478.8047584,
+      "load_centroid_offset_um": 2.1908636057004302e-12,
+      "contact_fraction": 1.0,
+      "force_residual_n": 2.2737367544323206e-13,
+      "gap_residual_m": 7.938692821913044e-13
+    },
+    {
+      "design": "无修形",
+      "operating_point": "额定失准",
+      "torque_n_m": 80.0,
+      "misalignment_m": 1.2e-05,
+      "te_peak_to_peak_um": 2.8997318259464575,
+      "max_pressure_mpa": 1004.2837209729018,
+      "mean_stiffness_n_per_m": 517946403.07895315,
+      "load_centroid_offset_um": 6663.770275418732,
+      "contact_fraction": 0.7812500000000001,
+      "force_residual_n": 9.094947017729282e-13,
+      "gap_residual_m": 9.981839497419875e-13
+    },
+    {
+      "design": "无修形",
+      "operating_point": "过载反向失准",
+      "torque_n_m": 120.0,
+      "misalignment_m": -8e-06,
+      "te_peak_to_peak_um": 3.6007961610197596,
+      "max_pressure_mpa": 1036.8153417988626,
+      "mean_stiffness_n_per_m": 668799320.3510518,
+      "load_centroid_offset_um": 3718.8207482224393,
+      "contact_fraction": 1.0,
+      "force_residual_n": 9.094947017729282e-13,
+      "gap_residual_m": 1.8812114824687622e-12
+    },
+    {
+      "design": "鼓形5",
+      "operating_point": "轻载对中",
+      "torque_n_m": 40.0,
+      "misalignment_m": 0.0,
+      "te_peak_to_peak_um": 1.4875787957838178,
+      "max_pressure_mpa": 618.3503412359378,
+      "mean_stiffness_n_per_m": 520659841.6527783,
+      "load_centroid_offset_um": 0.0003074935959987308,
+      "contact_fraction": 0.7752976190476191,
+      "force_residual_n": 2.2737367544323206e-13,
+      "gap_residual_m": 1.9981829055897254e-12
+    },
+    {
+      "design": "鼓形5",
+      "operating_point": "额定失准",
+      "torque_n_m": 80.0,
+      "misalignment_m": 1.2e-05,
+      "te_peak_to_peak_um": 3.0431068096186045,
+      "max_pressure_mpa": 869.0856212153037,
+      "mean_stiffness_n_per_m": 511688093.0375214,
+      "load_centroid_offset_um": 5095.057708666012,
+      "contact_fraction": 0.7544642857142858,
+      "force_residual_n": 4.547473508864641e-13,
+      "gap_residual_m": 1.9223427857474455e-12
+    },
+    {
+      "design": "鼓形5",
+      "operating_point": "过载反向失准",
+      "torque_n_m": 120.0,
+      "misalignment_m": -8e-06,
+      "te_peak_to_peak_um": 3.777695373950288,
+      "max_pressure_mpa": 968.3345641369275,
+      "mean_stiffness_n_per_m": 615840622.9555029,
+      "load_centroid_offset_um": 3191.0025769953345,
+      "contact_fraction": 0.9055059523809526,
+      "force_residual_n": 9.094947017729282e-13,
+      "gap_residual_m": 9.573412382117303e-13
+    },
+    {
+      "design": "组合修形",
+      "operating_point": "轻载对中",
+      "torque_n_m": 40.0,
+      "misalignment_m": 0.0,
+      "te_peak_to_peak_um": 1.6749184666980388,
+      "max_pressure_mpa": 677.6648706644318,
+      "mean_stiffness_n_per_m": 447074159.4734183,
+      "load_centroid_offset_um": 0.0002818714446694885,
+      "contact_fraction": 0.6510416666666666,
+      "force_residual_n": 2.2737367544323206e-13,
+      "gap_residual_m": 1.9698828216202177e-12
+    },
+    {
+      "design": "组合修形",
+      "operating_point": "额定失准",
+      "torque_n_m": 80.0,
+      "misalignment_m": 1.2e-05,
+      "te_peak_to_peak_um": 2.954778460132704,
+      "max_pressure_mpa": 878.5100018378018,
+      "mean_stiffness_n_per_m": 505813733.51536953,
+      "load_centroid_offset_um": 4161.261326461749,
+      "contact_fraction": 0.7351190476190477,
+      "force_residual_n": 4.547473508864641e-13,
+      "gap_residual_m": 1.899163834177917e-12
+    },
+    {
+      "design": "组合修形",
+      "operating_point": "过载反向失准",
+      "torque_n_m": 120.0,
+      "misalignment_m": -8e-06,
+      "te_peak_to_peak_um": 3.7691141203728136,
+      "max_pressure_mpa": 1000.3967910203321,
+      "mean_stiffness_n_per_m": 595143089.456419,
+      "load_centroid_offset_um": 2671.672063323822,
+      "contact_fraction": 0.8645833333333334,
+      "force_residual_n": 9.094947017729282e-13,
+      "gap_residual_m": 1.6373752278754346e-12
+    }
+  ],
+  "design_summary": [
+    {
+      "design": "无修形",
+      "worst_te_peak_to_peak_um": 3.6007961610197596,
+      "worst_pressure_mpa": 1036.8153417988626,
+      "worst_load_centroid_offset_um": 6663.770275418732,
+      "feasible": true,
+      "pareto": true
+    },
+    {
+      "design": "鼓形5",
+      "worst_te_peak_to_peak_um": 3.777695373950288,
+      "worst_pressure_mpa": 968.3345641369275,
+      "worst_load_centroid_offset_um": 5095.057708666012,
+      "feasible": true,
+      "pareto": true
+    },
+    {
+      "design": "组合修形",
+      "worst_te_peak_to_peak_um": 3.7691141203728136,
+      "worst_pressure_mpa": 1000.3967910203321,
+      "worst_load_centroid_offset_um": 4161.261326461749,
+      "feasible": true,
+      "pareto": true
+    }
+  ],
+  "pareto_names": [
+    "无修形",
+    "鼓形5",
+    "组合修形"
+  ],
+  "objectives": [
+    "最坏工况法向TE峰峰值",
+    "最坏工况最大Hertz压力"
+  ],
+  "search_scope": "在明确给定的有限候选与工况集合中比较，不宣称连续全局最优"
+}

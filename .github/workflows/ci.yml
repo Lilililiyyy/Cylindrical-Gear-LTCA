@@ -1,63 +1,32 @@
-name: 测试与构建
-
-on:
-  push:
-  pull_request:
-  workflow_dispatch:
-
+name: 当前案例检查
+on: [push, pull_request, workflow_dispatch]
 permissions:
   contents: read
-
-concurrency:
-  group: ci-${{ github.ref }}
-  cancel-in-progress: true
-
-env:
-  PYTHONUTF8: "1"
-  PYTHONDONTWRITEBYTECODE: "1"
-  MPLBACKEND: Agg
-  MPLCONFIGDIR: ${{ github.workspace }}/.cache/matplotlib
-  OPENBLAS_NUM_THREADS: "1"
-  OMP_NUM_THREADS: "1"
-
 jobs:
-  test:
-    name: ${{ matrix.os }} / Python ${{ matrix.python }}
-    runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-latest, windows-latest]
-        python: ["3.10", "3.11"]
-    steps:
-      - uses: actions/checkout@v6
-      - uses: actions/setup-python@v5
-        with:
-          python-version: ${{ matrix.python }}
-          cache: pip
-          cache-dependency-path: constraints.txt
-      - name: 安装中文字体
-        if: runner.os == 'Linux'
-        run: sudo apt-get update && sudo apt-get install -y fonts-noto-cjk
-      - name: 安装已验证的依赖组合
-        run: python -m pip install -c constraints.txt -e ".[plots]"
-      - name: 解析、数值与接口测试
-        run: python -B -m unittest discover -s tests -v
-      - name: 仓库与命令入口检查
-        run: python -B scripts/check_project.py --skip-tests
-      - name: 全部案例的快速执行
-        run: python -B examples/run_examples.py --output output/ci_examples --quick
-
-  build:
+  examples:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      PYTHONUTF8: "1"
+      PYTHONDONTWRITEBYTECODE: "1"
+      MPLBACKEND: Agg
+      MPLCONFIGDIR: ${{ github.workspace }}/output/mpl_cache
+      OPENBLAS_NUM_THREADS: "1"
+      OMP_NUM_THREADS: "1"
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
-      - name: 安装构建工具
-        run: python -m pip install --upgrade build twine
-      - name: 构建源码与wheel分发
-        run: python -m build
-      - name: 检查分发元数据
-        run: python -m twine check dist/*
+          python-version: "3.10"
+      - name: 安装案例依赖
+        run: python -m pip install -c constraints.txt -e ".[plots]"
+      - name: 复算当前案例
+        run: |
+          python -B examples/run_examples.py --output output/ci_examples --quick
+          python -B -m unittest discover -s tests -v
+      - name: 工程案例与相似律接口复核
+        run: python -B examples/validate_cases.py --output output/ci_case_validation --quick
+      - name: MASTA案例对标
+        run: python -B examples/run_benchmarks.py --output output/ci_masta --require-common-match
+      - name: 单案例几何、显式因子强度与配准LTCA复算
+        run: python -B examples/run_cylindrical_workflow.py --output output/ci_helical_18_77

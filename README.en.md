@@ -1,148 +1,149 @@
 # Cylindrical Gear LTCA
 
-**Quasi-static loaded tooth contact analysis for involute cylindrical gears**
+[中文](README.md) | [English](README.en.md)
 
-[简体中文](README.md) · **English**
+A Python calculation kernel for involute cylindrical gear geometry, strength rating and quasi-static loaded tooth contact analysis (LTCA). MASTA is used only for numerical benchmarking.
 
-A semi-analytical LTCA tool combining parametric meshing geometry, reduced-order tooth compliance and unilateral contact constraints. It computes load distribution, Hertz pressure, loaded static transmission error (TE) and tangent normal mesh stiffness with microgeometry and prescribed misalignment, and compares designs across operating conditions.
+## Installation and use
 
-## Example gallery
-
-These deterministic examples use the same **28/56 spur gear pair at 80 N·m**: module 2.5 mm, face width 25 mm, pressure angle 20°, steel with E = 210 GPa and ν = 0.3, 64 mesh phases and 41 strips per contact line. Envelope, TE and stiffness comparisons use aligned/unmodified gears, 12 μm end-to-end normal misalignment, and the same misalignment with 10 μm lead crowning. The instantaneous footprint uses a separate aligned, crowned case.
-
-### Instantaneous contact footprint
-
-![Single-phase, single-tooth-pair pressure reconstruction for an aligned crowned gear pair](docs/assets/contact_pattern.png)
-
-The footprint shows **phase 0.375 and one tooth pair**, with 10 μm lead crowning and zero misalignment. Pressure across the narrow contact band is reconstructed from the computed line loads and local Hertz half-widths. The along-line axis uses mm and the transverse, in-surface axis uses μm; the transverse direction is enlarged for visibility.
-
-This is a **strip-wise Hertz reconstruction**, not a full two-dimensional contact solution. The shape follows the strip loads; an ellipse is not imposed. Unmodified spur gears may instead exhibit a long contact strip.
-
-### One-cycle loaded contact envelope
-
-![One-cycle envelopes for aligned, misaligned and lead-crowned cases](docs/assets/contact_envelope.png)
-
-The three maps share one pressure scale and show the **loaded contact envelope swept over one base-pitch cycle**. Continuous contours use linear interpolation inside the sampled convex hull; light grey denotes inactive or unsampled regions. This view tracks contact locations over the tooth surface and differs from the fixed-phase footprint above. Boundary accuracy depends on solver resolution.
-
-### Loaded static transmission error
-
-![Loaded static TE with peak-to-peak values for each case](docs/assets/transmission_error.png)
-
-The curves connect the original normal-approach samples. The sidebar reports peak-to-peak TE. Angular TE is exported separately using the pinion's virtual-work-consistent normal-force lever arm.
-
-### Tangent normal mesh stiffness
-
-![Tangent normal mesh stiffness with mean values for each case](docs/assets/mesh_stiffness.png)
-
-Stiffness follows from the tangent contact equilibrium and is displayed in N/μm. Curves retain the original phase sampling and load-sharing transitions. Lead crowning can reduce peak pressure under misalignment while increasing TE fluctuation; the example does not assume that every metric improves.
-
-Regenerate the figures and source data:
-
-```bash
-python -B examples/generate_readme_figures.py
-```
-
-Selected response data are available in [example_responses.csv](docs/data/example_responses.csv). Full configurations, CSV, NPZ and editable SVG files are written to `output/readme_examples/`. See the [plotting guide](docs/plotting.md#english) for contour semantics and reconstruction details.
-
-## Quick start
-
-Python 3.10 or 3.11 is recommended:
+Python 3.10 or 3.11 is recommended. Run from the repository root:
 
 ```bash
 python -m pip install -c constraints.txt -e ".[plots]"
-python -m gear_contact examples/spur_case.json --output output/first_case --plots
+python -B examples/run_cylindrical_workflow.py --output output/helical_18_77 --plots
 ```
 
-After installation, the console entry point is also available:
-
-```bash
-gear-ltca examples/spur_case.json --output output/first_case --plots
-```
-
-`output/first_case/` contains inputs, summary metrics, convergence diagnostics, full arrays, cycle/contact-cell CSV files and PNG/SVG figures. `gear-contact` remains a compatibility alias.
-
-- `pyproject.toml` declares required packages, compatible version ranges and the optional `plots`/`dev` dependency groups.
-- `constraints.txt` pins the validated NumPy, SciPy and Matplotlib versions for reproducibility. Use it with `pip -c`.
-
-For the computational core alone, run `python -m pip install -e .`. Internal units are **m, N, Pa and rad**, with torque in N·m. Positive microgeometry values represent material removal and increase the initial gap.
-
-## Python API
+For calculations without plots, use `python -m pip install -e .`. The command-line entry point is `gear-ltca`; `gear-contact` remains available as an alias.
 
 ```python
-from gear_contact import Gear, GearPair, SurfaceModification, analyze_pair, export_result
-from gear_contact.plotting import plot_analysis
+import json
+from pathlib import Path
+from gear_contact import analyze_config, export_result
 
-pair = GearPair(
-    Gear(teeth=28, normal_module_m=0.0025, face_width_m=0.025),
-    Gear(teeth=56, normal_module_m=0.0025, face_width_m=0.025),
-)
-result = analyze_pair(
-    pair,
-    torque_n_m=80,
-    modification_pinion=SurfaceModification(lead_crown_m=8e-6, tip_relief_m=6e-6),
-    misalignment_m=12e-6,
-    phases=32,
-    strips=21,
-)
-print(result.summary)
-export_result(result, "output/my_case")
-plot_analysis(result, "output/my_case")
+case = json.loads(Path("examples/helical_18_77_case.json").read_text(encoding="utf-8"))
+config = case["analysis"]
+nominal = case["loading"]["nominal_pinion_torque_n_m"]
+config["torque_n_m"] = nominal * case["loading"]["ltca_torque_multiplier"]
+config["iso_settings"]["nominal_pinion_torque_n_m"] = nominal
+result = analyze_config(config)
+export_result(result, "output/helical_18_77_core")
 ```
+
+Inputs and results use SI units: m, N, Pa, rad and N·m. Positive modification removes material and increases the initial gap. Helix angles have equal magnitudes and opposite signs for external meshes, and the same sign for internal meshes. Put the internal ring gear in `wheel` and keep tooth counts positive.
 
 ## Capabilities
 
-| Module | Supported features |
-| --- | --- |
-| Meshing geometry | External/internal meshes, spur/helical gears, profile shift, active form diameters, axial offset, contact-line discretization |
-| Microgeometry and deviations | Lead/profile crowning, slope, tip/root relief, end relief, bias, explicit combinations of 1D/2D measured deviations |
-| Elastic contact | Variable-section beam, face-width shear-energy coupling, unilateral contact, load balance, local indentation, analytical tangent stiffness |
-| LTCA outputs | Loaded regions, load distribution, Hertz half-width and pressure, normal/angular static TE, mesh stiffness and TE orders |
-| Design studies | Parameter scans, worst-case metrics, pressure constraints, finite-candidate Pareto screening |
-| Data and figures | JSON/NPZ/CSV; contact contours, TE, stiffness, microgeometry and design comparisons in PNG/SVG |
+|Module|Capabilities|
+|---|---|
+|Geometry and meshing|Internal/external and spur/helical meshes, profile shifts, reference and base circles, centre distance, active profile limits, contact ratios and discretized contact lines|
+|Microgeometry and boundaries|Lead/profile crowning, slopes, tip/root relief, end relief, bias, combined measured deviations, axial offsets and prescribed misalignment|
+|Strength rating|ISO 6336:2006 contact/root stresses and safety factors, with rating factors supplied by the user|
+|Elasticity|Variable-section tooth beams with local Hertz indentation; optional ISO 6336 total tooth-pair stiffness and Love strip influences|
+|Extended contact|Tooth-tip extension geometry, additional gaps and contact-domain checks|
+|LTCA|Contact load sharing, transmission error, mesh stiffness, contact pressure and contact half-width|
+|Design and data|Multiple operating conditions, parameter sweeps, Pareto screening, JSON/NPZ/CSV data and PNG/SVG plots|
 
-At each mesh phase, candidate contact lines and initial gaps are combined with both gears' structural compliance and local indentation to enforce compatibility, nonpenetration, nonnegative forces and total load balance. The detailed [model](docs/model.md) and [API/units](docs/api.md) references are in Chinese.
+Strength calculations require rating factors and material stress limits. See the [model documentation](docs/model.md) for model choices, parameter definitions and scope.
 
-## Examples and validation
+## Current case and reproduction
+
+An 18/77 external helical gear pair is used to compare geometry, strength, LTCA and contact pressure with MASTA.
+
+|Input|Value|
+|---|---:|
+|Tooth counts|18 / 77|
+|Normal module|2 mm|
+|Face width|24 mm|
+|Normal pressure angle|22.5°|
+|Helix angle magnitude|23.5°, opposite hands|
+|Profile shifts|+0.3268 / −0.3268|
+|Centre distance|103.5919 mm|
+|Material|E=207 GPa, ν=0.3|
+|Nominal pinion torque|1.718873 N·m|
+|LTCA torque|2.536165 N·m|
 
 ```bash
-# Run all examples with a small smoke-test grid
-python -B examples/run_examples.py --output output/quick --quick
-
-# Full examples: 32 phases and 21 strips by default
-python -B examples/run_examples.py --output output/full
-
-# Separate 16/32/64-phase sensitivity check
-python -B examples/check_phase_resolution.py --output output/phase_resolution
-
-# Tests, documentation links and CLI checks
-python -B scripts/check_project.py
+python -B examples/run_cylindrical_workflow.py examples/helical_18_77_case.json --reference examples/helical_18_77_reference.json --output output/helical_18_77 --plots
 ```
 
-Examples cover analytical spring/Hertz baselines, spur gears, combined microgeometry, misalignment, 20–120 N·m loads, helical gears, internal meshes, synthetic measured residuals, spatial resolution and multi-condition studies. See [examples](docs/examples.md) for details.
+The [case input](examples/helical_18_77_case.json) defines geometry, materials, modifications, boundaries, loads and discretization. Nominal torque is used for strength rating; the LTCA torque includes load factors.
 
-The existing numerical baseline includes 24 recalculated configurations. For the tested combined-modification case, refining from 21 to 41 strips and from 32 to 64 phases changed the listed TE, pressure and stiffness metrics by less than 1%. The [validation record](docs/validation.md) describes the scope and historical environment. GitHub Actions is configured for Linux/Windows with Python 3.10/3.11, plus example execution and distribution builds.
+**Key geometry and strength**
 
-## Model scope
+![Key geometry, stresses and safety factors](examples/results/helical_18_77/en/02_case_benchmarks.png)
 
-The model assumes small deformation, linear elasticity, frictionless quasi-static contact. Structural compliance uses a fixed-root variable-section beam with reduced-order face-width shear coupling; external structural compliance can also be supplied. Local indentation uses a finite-reference-depth line-contact approximation, with checks on its validity domain.
+The comparison covers reference/base diameters, centre distance, contact/root stresses and safety factors for both gears. The same rating factors and material stress limits are used.
 
-Full 3D elastic-contact accuracy and physical experiments have not been validated. The implementation does not generate the actual root fillet, automatically check undercut/interference, include tooth/wheel bending from helical axial forces, or directly predict root stress, fatigue, lubrication, temperature rise or system-level dynamic noise. Multi-condition screening applies only to the specified conditions and candidate set.
+**LTCA cycle response**
+
+![LTCA cycle response: MASTA and this project](examples/results/helical_18_77/en/03_ltca_cycle.png)
+
+This case uses ISO total stiffness, Love strip influences and tooth-tip extension. Both calculations use the same load and working flank, with 32 mesh positions per period and 40 strips per contact line. One steady-state period is displayed over three periods; the statistics below use a single period.
+
+|Cycle metric|MASTA|This project|Relative difference|
+|---|---:|---:|---:|
+|Mean normal TE / μm|1.106705|1.106705|<0.001%|
+|Peak-to-peak TE / μm|0.034134|0.034134|<0.001%|
+|Mean normal stiffness / N/μm|220.932698|220.932698|<0.001%|
+|Maximum contact pressure / MPa|186.674352|186.674382|<0.001%|
+
+Full values are available in the [comparison table](examples/results/helical_18_77/comparison.csv).
+
+**Contact pressure comparison**
+
+![Contact pressure: MASTA and this project](examples/results/helical_18_77/en/07_native_contact_comparison.png)
+
+MASTA results are shown on the left and this project's results on the right, for the same load and working flank over one tooth passage. The horizontal axis is the face-width coordinate, the vertical axis is pinion roll distance, and colour indicates pressure. Grey denotes uncovered regions.
+
+Separate views are available for the [MASTA contact pressure](examples/results/helical_18_77/07_masta_native_contact.png), [instantaneous pressure bands at the same phase](examples/results/helical_18_77/en/04_contact_pattern.png), and [contact positions and cycle coverage](examples/results/helical_18_77/en/05_contact_coordinates.png). Tooth-passage pressure distributions and instantaneous loaded regions are shown separately.
+
+Plots and data are in the [case results directory](examples/results/helical_18_77/). The case command generates complete contact data and SVG plots. To reproduce the English figures:
+
+```bash
+python -B examples/generate_english_figures.py --output output/helical_18_77_en
+```
+
+**Misalignment and crowning sensitivity for the same case**
+
+Geometry, material, load, existing modifications and prescribed boundaries are retained. The alternatives add 1 μm of end-to-end misalignment, then an additional 0.5 μm of pinion lead crowning under that misalignment. This analysis is included in the case command above.
+
+![Misalignment and crowning sensitivity for the 18/77 pair](examples/results/helical_18_77/en/06_modification_sensitivity.png)
+
+|Metric|Baseline|Additional misalignment|Misalignment + additional crowning|
+|---|---:|---:|---:|
+|Peak-to-peak TE / μm|0.034134|0.038338|0.076337|
+|Mean stiffness / N/μm|220.933|213.019|202.738|
+|Endpoint peak pressure / MPa|186.674|192.671|201.673|
+
+All three alternatives are calculated by this project. Additional crowning increases both TE variation and peak pressure in this operating condition; modification selection depends on load, misalignment and existing microgeometry.
+
+## Verification
+
+```bash
+python -B examples/run_examples.py --output output/full
+python -B examples/validate_cases.py --output output/case_validation
+python -B examples/check_phase_resolution.py --output output/phase_resolution
+python -B examples/run_benchmarks.py --output output/masta --plots --require-common-match
+python -B -m unittest discover -s tests -v
+```
+
+Verification covers internal/external and spur/helical meshes, combined modifications, dissimilar materials, load changes, mirrored misalignment, zero load and similarity laws. See the [verification data](examples/results/validation/).
+
+## Scope
+
+Contact analysis assumes small deformation, linear elasticity, no friction and quasi-static loading. The current models do not include complete gear-body, shaft or bearing deformation, lubrication, temperature rise, fatigue life or dynamic noise.
+
+Strength ratings and local LTCA contact pressure are assessed separately. Validation currently relies on numerical comparisons; experimental accuracy has not been established.
+
+Equations and assumptions are described in the [model documentation](docs/model.md). Functions, units and array layouts are described in the [interface documentation](docs/api.md). These detailed documents are currently in Chinese.
+
+## Updates and roadmap
+
+- **0.1.0**: Involute cylindrical gear geometry, modifications, tooth-beam elasticity, Hertz contact, LTCA and comparison of operating conditions.
+- **0.2.0**: ISO total stiffness and Love strip influences, tooth-tip extension, ISO 6336:2006 explicit-factor strength rating, and the 18/77 MASTA benchmark with three-period curves, contact pressure and misalignment/crowning sensitivity; Chinese and English documentation and figures.
+- **Near-term plans**: More internal-mesh and edge-contact cases, mesh and phase convergence studies, and independent 3D contact and experimental validation.
+- **Further extensions**: Coupled finite-tooth, gear-body and support compliance, more complete standard rating-factor and material-life calculations, and parametric microgeometry optimization. These items are planned capabilities.
 
 ## Repository layout
 
-```text
-cylindrical-gear-ltca/
-├── gear_contact/       # Solver, data export and plotting
-├── examples/           # JSON inputs, examples and gallery regeneration
-├── tests/              # Analytical, numerical, API and plotting checks
-├── scripts/            # Repository checks
-├── docs/               # Model, API, validation, plotting, selected figures/data
-├── .github/            # CI and issue templates
-├── README.md           # Chinese documentation
-├── README.en.md        # English documentation
-├── pyproject.toml      # Project metadata and dependency declarations
-├── constraints.txt     # Validated dependency pins for reproducibility
-└── LICENSE
-```
-
-Generated results, builds and caches are ignored; `docs/` keeps selected examples and validation evidence. See [contributing](CONTRIBUTING.md) and the [changelog](CHANGELOG.md). Released under the [MIT license](LICENSE).
+`gear_contact/` contains the calculation and post-processing modules; `examples/` contains inputs and runnable workflows, with selected results in `examples/results/`; `docs/` contains model and interface documentation; `tests/` and `.github/` run verification. Released under the [MIT licence](LICENSE).

@@ -12,5 +12,8 @@ from .analysis import AnalysisResult, RotationResult, analyze_pair, transmission
 from .design import OperatingPoint, DesignStudy, compare_designs, sweep_parameter, robust_design_search
 from .io import export_result
 from .config import analyze_config, modification_from_config
+from .strength import MeshRatingFactors, GearRatingFactors, StressLimits, evaluate_iso6336_explicit_factors
+from .iso_contact import ISOContactSettings, iso_single_tooth_stiffness, build_iso_compliance
+from .extended_contact import ExtendedContactSettings, extended_contact_grid
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"

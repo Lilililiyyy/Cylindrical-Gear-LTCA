@@ -1,7 +1,7 @@
 """齿面几何、应变能柔度、单边接触与压力后处理的统一计算入口。"""
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import asdict, dataclass
 from typing import Callable
 
 import numpy as np
@@ -11,6 +11,8 @@ from .surfaces import SurfaceModification
 from .elasticity import Material, build_structural_compliance
 from .hertz import hertz_line_contact, local_line_approach, local_line_complementary_energy
 from .solver import ContactSolution, solve_contact
+from .iso_contact import ISOContactSettings, solve_iso_contact
+from .extended_contact import ExtendedContactSettings, extended_contact_grid
 
 
 @dataclass
@@ -23,6 +25,8 @@ class RotationResult:
     pressure_pa: np.ndarray
     half_width_m: np.ndarray
     elastic_diagnostics: dict
+    contact_geometry_data: object | None = None
+    endpoint_pressure: dict | None = None
 
 
 @dataclass
@@ -38,10 +42,11 @@ class AnalysisResult:
     inputs: dict
 
 
-def transmission_error_spectrum(values, count: int = 10) -> dict:
+def transmission_error_spectrum(values, count: int = 10, *, phase_origin: float = 0.0) -> dict:
     """均匀单周期采样的实数傅里叶谱。
 
-    第一个样本位于相位0，约定 x(t)=mean+ΣA cos(2πnt+φ)。
+    第一个样本位于phase_origin，返回相位仍参考物理相位0，约定
+    x(t)=mean+ΣA cos(2πnt+φ)。仅适用于均匀完整周期采样。
     正常正频率幅值乘2，Nyquist项不乘2。近零幅值相位为NaN，避免
     将浮点噪声报告为确定相位；均值单独返回，频率单位为啮合阶次。
     """
@@ -50,13 +55,18 @@ def transmission_error_spectrum(values, count: int = 10) -> dict:
         raise ValueError("频谱需要至少两个有限、均匀单周期样本")
     if not isinstance(count, int) or count < 1:
         raise ValueError("谐波阶数必须为正整数")
+    if not np.isfinite(phase_origin):
+        raise ValueError("频谱的起采物理相位必须为有限数")
     coefficients = np.fft.rfft(a)/a.size
     last = min(count, a.size//2)
     orders = np.arange(1, last+1)
     amplitudes = 2*np.abs(coefficients[orders])
     if a.size % 2 == 0 and last == a.size//2:
         amplitudes[-1] /= 2
-    phase = np.angle(coefficients[orders])
+    selected = coefficients[orders]
+    if phase_origin != 0:
+        selected = selected * np.exp(-2j * np.pi * orders * phase_origin)
+    phase = np.angle(selected)
     threshold = max(float(np.max(np.abs(a)))*1e-12, np.finfo(float).tiny)
     phase[amplitudes < threshold] = np.nan
     return {"mean": float(np.mean(a)), "order": orders,
@@ -81,7 +91,10 @@ def analyze_pair(pair: GearPair, *, torque_n_m: float,
                  material_pinion: Material = Material(), material_wheel: Material = Material(),
                  modification_pinion=SurfaceModification(), modification_wheel=SurfaceModification(),
                  misalignment_m: float = 0.0, phases: int = 32, strips: int = 21,
+                 phase_offset: float = 0.0,
                  elastic_mode: str = "coupled", local_contact: bool = True,
+                 iso_settings: ISOContactSettings | dict | None = None,
+                 extended_contact_settings: ExtendedContactSettings | dict | None = None,
                  local_reference_depths_m=None,
                  compliance_provider: Callable | None = None,
                  boundary_gap: Callable | None = None) -> AnalysisResult:
@@ -94,6 +107,10 @@ def analyze_pair(pair: GearPair, *, torque_n_m: float,
     boundary_gap(phase,grid) 可提供附加法向边界间隙，长度单位m。
     local_reference_depths_m=(D小轮,D大轮) 可显式给出局部位移参照深度；
     省略时每个单元以相应曲率半径为有限参照，不能解释为无限远位移。
+    phase_offset 为均匀完整周期的起采相位，单位为基节周期；仅通过
+    接触线几何配准确定，不允许通过响应曲线拟合来最小化对标差异。
+    elastic_mode为iso/iso_love时采用ISO综合齿对刚度，iso_settings
+    必须提供名义载荷，且local_contact必须False，避免重复计入压陷。
     """
     if not np.isfinite(torque_n_m) or torque_n_m < 0 or not np.isfinite(misalignment_m):
         raise ValueError("扭矩幅值必须非负有限，失准间隙必须有限")
@@ -101,40 +118,87 @@ def analyze_pair(pair: GearPair, *, torque_n_m: float,
         raise ValueError("每周期相位数必须为至少2的整数")
     if isinstance(strips, bool) or not isinstance(strips, int) or strips < 2:
         raise ValueError("每条接触线的条带数必须为至少2的整数")
+    if isinstance(phase_offset, bool) or not np.isfinite(phase_offset):
+        raise ValueError("起采相位必须为有限实数，以基节周期计")
+    phase_offset = float(phase_offset) % 1.0
+    iso_mode = elastic_mode in ("iso", "iso_love")
+    if iso_mode:
+        if local_contact:
+            raise ValueError("ISO刚度已包含综合接触变形，必须显式设local_contact=False")
+        if compliance_provider is not None:
+            raise ValueError("ISO模式不能同时提供外部结构柔度")
+        if iso_settings is None:
+            raise ValueError("ISO模式需要iso_settings明确给出名义扭矩，不能使用评级后目标代替")
+        if isinstance(iso_settings, dict):
+            iso_settings = ISOContactSettings(**iso_settings)
+        if not isinstance(iso_settings, ISOContactSettings):
+            raise ValueError("iso_settings必须为ISOContactSettings或对应字段对象")
+    elif iso_settings is not None:
+        raise ValueError("iso_settings只适用于iso或iso_love模式")
+    if extended_contact_settings is not None:
+        if not iso_mode:
+            raise ValueError("齿顶延伸目前只与ISO模式组合，不能用于未定义延伸齿梁截面的模型")
+        if isinstance(extended_contact_settings, dict):
+            extended_contact_settings = ExtendedContactSettings(**extended_contact_settings)
+        if not isinstance(extended_contact_settings, ExtendedContactSettings):
+            raise ValueError("extended_contact_settings必须为ExtendedContactSettings或对应字段对象")
     force = pair.normal_force_from_torque(torque_n_m)
-    phase_array = np.arange(phases, dtype=float)/phases
+    phase_array = (np.arange(phases, dtype=float)/phases + phase_offset) % 1.0
     rotations = []
     zlo = max(-pair.pinion.face_width_m/2, pair.axial_offset_m-pair.wheel.face_width_m/2)
     zhi = min(pair.pinion.face_width_m/2, pair.axial_offset_m+pair.wheel.face_width_m/2)
     zmid = (zlo+zhi)/2
     centroids, concentrations, contact_fractions = [], [], []
     for phase in phase_array:
-        grid = contact_grid(pair, float(phase), strips=strips)
-        if (np.any(~np.isfinite(grid.curvature_per_m)) or np.any(grid.curvature_per_m <= 0)
+        extended = (extended_contact_grid(pair, float(phase), strips=strips, settings=extended_contact_settings)
+                    if extended_contact_settings is not None else None)
+        grid = extended.grid if extended is not None else contact_grid(pair, float(phase), strips=strips)
+        if not iso_mode and (np.any(~np.isfinite(grid.curvature_per_m)) or np.any(grid.curvature_per_m <= 0)
                 or np.any(grid.radius_pinion_m <= 0) or np.any(grid.radius_wheel_m <= 0)):
             raise ValueError("接触网格含基圆尖点或非正组合曲率，局部线接触近似不适用；"
                              "请明确给定实际有效根形径并检查啮合干涉，不能用微小半径替代")
         removal_p = modification_pinion.evaluate(grid.profile_factor_pinion, grid.lead_factor_pinion)
         removal_w = modification_wheel.evaluate(grid.profile_factor_wheel, grid.lead_factor_wheel)
         gaps = np.asarray(removal_p+removal_w + misalignment_m*(grid.face_coordinate_m-zmid)/(zhi-zlo), dtype=float)
+        if extended is not None:
+            gaps = gaps+extended.gap_correction_m
         if boundary_gap is not None:
             additional = np.asarray(boundary_gap(float(phase), grid), dtype=float)
             if additional.shape != gaps.shape or not np.all(np.isfinite(additional)):
                 raise ValueError("边界间隙回调必须返回与接触网格同形的有限米制数组")
             gaps = gaps+additional
-        if compliance_provider is None:
+        if iso_mode:
+            solution, elastic_diagnostics = solve_iso_contact(pair, grid, gaps, force,
+                material_pinion, material_wheel, iso_settings, coupled=elastic_mode == "iso_love",
+                eligible=extended.eligible if extended is not None else None)
+        elif compliance_provider is None:
             compliance, elastic_diagnostics = build_structural_compliance(
                 pair, grid, material_pinion, material_wheel, mode=elastic_mode)
         else:
             compliance = compliance_provider(pair, grid)
             elastic_diagnostics = {"model": "调用方给定的结构柔度矩阵", "local_contact_included": False}
-        local_law = _LocalLaw(grid, material_pinion, material_wheel, local_reference_depths_m) if local_contact else None
-        solution = solve_contact(gaps, compliance, force, local_law=local_law)
+        if not iso_mode:
+            local_law = _LocalLaw(grid, material_pinion, material_wheel, local_reference_depths_m) if local_contact else None
+            solution = solve_contact(gaps, compliance, force, local_law=local_law)
         line_load = solution.forces_n/grid.widths_m
-        pressure = hertz_line_contact(line_load, grid.curvature_per_m, material_pinion, material_wheel)
+        if not iso_mode:
+            pressure = hertz_line_contact(line_load, grid.curvature_per_m, material_pinion, material_wheel)
+            pressure_values = np.asarray(pressure.maximum_pressure_pa)
+            half_width_values = np.asarray(pressure.half_width_m)
+        else:
+            loaded = solution.forces_n > 0
+            if np.any(loaded & (~np.isfinite(grid.curvature_per_m) | (grid.curvature_per_m <= 0))):
+                raise ValueError("承载接触点曲率无效，不能计算Hertz压力")
+            pressure_values, half_width_values = np.zeros_like(line_load), np.zeros_like(line_load)
+            if np.any(loaded):
+                pressure = hertz_line_contact(line_load[loaded], grid.curvature_per_m[loaded], material_pinion, material_wheel)
+                pressure_values[loaded], half_width_values[loaded] = pressure.maximum_pressure_pa, pressure.half_width_m
+        endpoint_pressure = None
+        if extended is not None:
+            from .contact_pressure import extended_endpoint_pressure
+            endpoint_pressure = extended_endpoint_pressure(extended, solution.forces_n, material_pinion, material_wheel)
         rotations.append(RotationResult(grid, gaps, solution, line_load,
-                                        np.asarray(pressure.maximum_pressure_pa),
-                                        np.asarray(pressure.half_width_m), elastic_diagnostics))
+                                        pressure_values, half_width_values, elastic_diagnostics, extended, endpoint_pressure))
         centroids.append(float(np.dot(solution.forces_n, grid.face_coordinate_m-zmid)/force) if force > 0 else 0.0)
         mean_load = force/float(np.sum(grid.widths_m))
         concentrations.append(float(np.max(line_load)/mean_load) if force > 0 else 0.0)
@@ -161,11 +225,16 @@ def analyze_pair(pair: GearPair, *, torque_n_m: float,
         "all_converged": all(r.solution.diagnostics["converged"] for r in rotations),
         "elastic_mode": elastic_mode if compliance_provider is None else "provided",
         "local_contact": bool(local_contact),
+        "extended_contact": extended_contact_settings is not None,
         "transverse_contact_ratio": float(pair.transverse_contact_ratio),
         "overlap_ratio": float(pair.overlap_ratio),
-        "model_scope": "固定齿根弹性降阶、无摩擦、小变形、准静态；压力采用局部线接触近似",
+        "model_scope": ("ISO综合齿对刚度、可选Love条带影响；无摩擦、准静态，压力采用局部线接触近似"
+                        if iso_mode else "固定齿根弹性降阶、无摩擦、小变形、准静态；压力采用局部线接触近似"),
     }
+    if extended_contact_settings is not None:
+        summary["max_endpoint_pressure_pa"] = max(float(np.max(r.endpoint_pressure["pressure_pa"])) for r in rotations)
     inputs = {"torque_n_m": float(torque_n_m), "misalignment_m": float(misalignment_m),
+              "phase_offset": phase_offset,
               "phases": phases, "strips": strips, "elastic_mode": elastic_mode,
               "local_contact": bool(local_contact), "material_pinion": material_pinion,
               "local_reference_depths_m": local_reference_depths_m,
@@ -173,4 +242,8 @@ def analyze_pair(pair: GearPair, *, torque_n_m: float,
               "modification_wheel": modification_wheel,
               "external_compliance_provider": compliance_provider is not None,
               "external_boundary_gap": boundary_gap is not None}
+    if iso_settings is not None:
+        inputs["iso_settings"] = asdict(iso_settings)
+    if extended_contact_settings is not None:
+        inputs["extended_contact_settings"] = asdict(extended_contact_settings)
     return AnalysisResult(pair, phase_array, approach, angular, stiffness, rotations, summary, inputs)

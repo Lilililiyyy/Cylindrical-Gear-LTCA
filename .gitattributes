@@ -9,3 +9,8 @@
 *.svg text eol=lf
 *.png binary
 *.npz binary
+
+# 结果文件按原始字节保存，防止换行转换使校验清单失效。
+examples/results/** -text whitespace=cr-at-eol
+examples/masta_reference/** -text whitespace=cr-at-eol
+examples/helical_18_77*.json -text whitespace=cr-at-eol

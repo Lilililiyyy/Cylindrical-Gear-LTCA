@@ -1,0 +1,31 @@
+{
+  "language": "en",
+  "numerical_arrays_equal_to_chinese": true,
+  "files": {
+    "02_case_benchmarks.png": "55905e39b751d3dadeafc827117dcf5310ab6630866e38b399619ff24b529b6e",
+    "03_ltca_cycle.png": "06fb2156f6378d3d3d97946e829982efda789a0c9c075ca66718ccd9396b05d0",
+    "04_contact_pattern.png": "58df2c3cce29da4a7dee7ed91765f4c229238e8b1ead09ecc58cfcb7022fb15e",
+    "05_contact_coordinates.png": "f079a07019db870b8088f68ce088787863f8f28ff5130b8a79677a0be82c7188",
+    "06_modification_sensitivity.png": "42a16d32f4c2b5c3d919effae70d1938bb8d1eb6206d87ce257cbc490019ea1d",
+    "07_native_contact_comparison.png": "0cffaeb8d9f0d5982e30a684d7a60e4d4228369fd8d5b75f293c436147a8a68d"
+  },
+  "translation_tool_sha256": "b85cecc38ecb2f8fbb3dbb5ce4383bc3966dd5261eb84cbc6b8c630e20289b9c",
+  "kernel_sha256": {
+    "__init__.py": "a6bf5d04d1fb112226e446bfd293b6b05811489ca813e98e2af54674fc067bc3",
+    "__main__.py": "d7edbd907ef0f1795469903dbd22078d47e204da2a2bf59d9c416d5860882b74",
+    "analysis.py": "d096c5d46fe461da91e783a849e6bf5fe63d55b2cb1f956e76b9ca9417c8d2fc",
+    "config.py": "850f4ca8b125bb986706d18a4c0159eb9e6dbbff3bf3bf3416516b977fe5c946",
+    "contact_pressure.py": "de5b10add5d9784f6f0e6c87d3aab0f33dc02899ac3d7430ba2acadc63cb1bc7",
+    "design.py": "24a73a80f8852d619c2ee7f0c5e7fc59402331491bf49d22d014d6be004593a0",
+    "elasticity.py": "4a3f5ef03b3f51779f3b3daadd386777313e1d710b17e3d813a2f31d1efe2d4c",
+    "extended_contact.py": "a07dda04acba2583ab949aaef19ccb30ee52551367f555cfc3f3da4deb213898",
+    "geometry.py": "c2a543660a675c0fd56137fcd77e3f9b2944ededcbc787fe8319f11927251e76",
+    "hertz.py": "42d176167c94ddccb75e0c12feb1ac4fe7146638ad68c4acf29b350bd6c36aef",
+    "io.py": "a2e89171846d6ffa9a18c4334887ac231b5919065f636778e7d2dc5f4fc9e271",
+    "iso_contact.py": "431b8ce1e7c685070fa710bd6f4e8d1015767238e6504d890a250f7e720a94fb",
+    "plotting.py": "6bd22bb334676cc7cff721695aabf8814168b64b477c5eefa58b2c476166c416",
+    "solver.py": "98437bd348e0f37e20072f5c391654d8a337af69c1dc12be19071501db54399c",
+    "strength.py": "28e9a6cd9b4de68d99edd90d1a4e003085d0e0bb24b89d7cbf1ff982a131993a",
+    "surfaces.py": "1f0a582d451f0d4a6c57e0e9b0fae416af92ddaf678b226a489a0c6d9df5b05a"
+  }
+}

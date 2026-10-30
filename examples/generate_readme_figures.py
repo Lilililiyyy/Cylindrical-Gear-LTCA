@@ -21,7 +21,7 @@ from run_examples import standard_pair
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, default=_ROOT / "output/readme_examples")
-    parser.add_argument("--assets", type=Path, default=_ROOT / "docs/assets")
+    parser.add_argument("--assets", type=Path, default=_ROOT / "examples/results")
     parser.add_argument("--phases", type=int, default=64)
     parser.add_argument("--strips", type=int, default=41)
     args = parser.parse_args()
@@ -33,7 +33,7 @@ def main():
         ("Lead crowned", "lead_crowned", 12e-6, SurfaceModification(lead_crown_m=10e-6)),
     )
     for label, name, misalignment, modification in cases:
-        print(f"计算 {label}: {args.phases} phases / {args.strips} strips", flush=True)
+        print(f"计算 {label}：{args.phases} 相位／{args.strips} 条带", flush=True)
         result = analyze_pair(pair, torque_n_m=80., modification_pinion=modification,
                               misalignment_m=misalignment, phases=args.phases, strips=args.strips)
         if not result.summary["all_converged"]:
@@ -56,7 +56,7 @@ def main():
     args.assets.mkdir(parents=True, exist_ok=True)
     for name in ("contact_pattern", "contact_envelope", "transmission_error", "mesh_stiffness", "design_comparison", "modification_surface"):
         shutil.copy2(args.output / f"{name}.png", args.assets / f"{name}.png")
-    data = args.assets.parent / "data"
+    data = args.assets
     data.mkdir(parents=True, exist_ok=True)
     shutil.copy2(args.output / "comparison_curves.csv", data / "example_responses.csv")
     print(f"示例图已更新：{args.assets.resolve()}", flush=True)

@@ -1,7 +1,9 @@
-include README.md README.en.md LICENSE CHANGELOG.md CONTRIBUTING.md constraints.txt
+include README.md README.en.md LICENSE constraints.txt
 include .gitignore .gitattributes .editorconfig
-recursive-include .github *.yml *.md
-recursive-include docs *.md *.json *.csv *.png
-recursive-include examples *.py *.json *.md
+recursive-include gear_contact *.py
+recursive-include examples *.py *.json *.csv *.png *.svg *.pdf *.npz
+recursive-include docs *.md *.json
+recursive-include .github *.yml
 recursive-include tests *.py
-recursive-include scripts *.py
+prune output
+global-exclude __pycache__ *.py[cod]

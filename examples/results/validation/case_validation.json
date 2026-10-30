@@ -1,0 +1,343 @@
+{
+  "generated_utc": "2026-10-30T10:07:22.181585+00:00",
+  "implementation": "新写验证工具",
+  "quick_mode": false,
+  "all_checks_passed": true,
+  "formal_acceptance_passed": true,
+  "input_origin": "确定性参数化合成案例",
+  "case_count": 15,
+  "cases": [
+    {
+      "case": "spur",
+      "label": "直齿基准",
+      "passed": true,
+      "phases": 32,
+      "strips": 21,
+      "normal_force_n": 2432.406337087799,
+      "te_peak_to_peak_m": 2.4469693033995363e-06,
+      "max_pressure_pa": 689162675.8203038,
+      "mean_mesh_stiffness_n_per_m": 661087698.0757711,
+      "force_residual_n": 9.094947017729282e-13,
+      "gap_residual_m": 1.7470764537076992e-12
+    },
+    {
+      "case": "combined",
+      "label": "组合修形",
+      "passed": true,
+      "phases": 32,
+      "strips": 21,
+      "normal_force_n": 2432.406337087799,
+      "te_peak_to_peak_m": 2.5989643215616664e-06,
+      "max_pressure_pa": 848254162.5073862,
+      "mean_mesh_stiffness_n_per_m": 571819496.5452034,
+      "force_residual_n": 9.094947017729282e-13,
+      "gap_residual_m": 1.678830162114473e-12
+    },
+    {
+      "case": "helical",
+      "label": "20° 外啮合斜齿",
+      "passed": true,
+      "phases": 32,
+      "strips": 21,
+      "normal_force_n": 2432.406337087799,
+      "te_peak_to_peak_m": 8.519314842759283e-07,
+      "max_pressure_pa": 746739923.5216699,
+      "mean_mesh_stiffness_n_per_m": 603611910.6220877,
+      "force_residual_n": 1.3642420526593924e-12,
+      "gap_residual_m": 1.991290585792423e-12
+    },
+    {
+      "case": "internal",
+      "label": "28/84 内啮合直齿",
+      "passed": true,
+      "phases": 32,
+      "strips": 21,
+      "normal_force_n": 2432.406337087799,
+      "te_peak_to_peak_m": 2.349842436282114e-06,
+      "max_pressure_pa": 573313053.8758842,
+      "mean_mesh_stiffness_n_per_m": 774862529.590744,
+      "force_residual_n": 9.094947017729282e-13,
+      "gap_residual_m": 1.9430125119014997e-12
+    },
+    {
+      "case": "internal_helical",
+      "label": "28/84 内啮合斜齿",
+      "passed": true,
+      "phases": 32,
+      "strips": 21,
+      "normal_force_n": 2432.406337087799,
+      "te_peak_to_peak_m": 8.255638022913852e-07,
+      "max_pressure_pa": 795118284.4924219,
+      "mean_mesh_stiffness_n_per_m": 650886402.1748192,
+      "force_residual_n": 9.094947017729282e-13,
+      "gap_residual_m": 1.8885890039140756e-12
+    },
+    {
+      "case": "nondefault",
+      "label": "非默认几何、异材料与载荷",
+      "passed": true,
+      "phases": 32,
+      "strips": 21,
+      "normal_force_n": 3644.8088707299985,
+      "te_peak_to_peak_m": 1.984003726753357e-06,
+      "max_pressure_pa": 532553297.8206866,
+      "mean_mesh_stiffness_n_per_m": 504707099.04274833,
+      "force_residual_n": 9.094947017729282e-13,
+      "gap_residual_m": 1.9848197487426413e-12
+    },
+    {
+      "case": "misalignment_positive",
+      "label": "鼓形叠加正失准",
+      "passed": true,
+      "phases": 32,
+      "strips": 21,
+      "normal_force_n": 2432.406337087799,
+      "te_peak_to_peak_m": 3.0892738156198915e-06,
+      "max_pressure_pa": 878510001.8378019,
+      "mean_mesh_stiffness_n_per_m": 507288808.4178494,
+      "force_residual_n": 4.547473508864641e-13,
+      "gap_residual_m": 3.042542346537447e-18
+    },
+    {
+      "case": "misalignment_negative",
+      "label": "鼓形叠加负失准",
+      "passed": true,
+      "phases": 32,
+      "strips": 21,
+      "normal_force_n": 2432.406337087799,
+      "te_peak_to_peak_m": 3.0892738156198924e-06,
+      "max_pressure_pa": 878510001.8378022,
+      "mean_mesh_stiffness_n_per_m": 507288808.4178494,
+      "force_residual_n": 9.094947017729282e-13,
+      "gap_residual_m": 3.0391542147484296e-18
+    },
+    {
+      "case": "zero_load",
+      "label": "零载荷接触开闭",
+      "passed": true,
+      "phases": 32,
+      "strips": 21,
+      "normal_force_n": 0.0,
+      "te_peak_to_peak_m": 0.0,
+      "max_pressure_pa": 0.0,
+      "mean_mesh_stiffness_n_per_m": 0.0,
+      "force_residual_n": 0.0,
+      "gap_residual_m": 0.0
+    },
+    {
+      "case": "material_scaling",
+      "label": "模量与载荷同比缩放",
+      "passed": true,
+      "phases": 32,
+      "strips": 21,
+      "normal_force_n": 3405.3688719229185,
+      "te_peak_to_peak_m": 2.5989643215616655e-06,
+      "max_pressure_pa": 1187555827.5103407,
+      "mean_mesh_stiffness_n_per_m": 800547295.1632849,
+      "force_residual_n": 9.094947017729282e-13,
+      "gap_residual_m": 1.678830162114473e-12
+    },
+    {
+      "case": "geometry_scaling",
+      "label": "长度与扭矩相似缩放",
+      "passed": true,
+      "phases": 32,
+      "strips": 21,
+      "normal_force_n": 7029.654314183738,
+      "te_peak_to_peak_m": 4.418239346654825e-06,
+      "max_pressure_pa": 848254162.5073862,
+      "mean_mesh_stiffness_n_per_m": 972093144.7217128,
+      "force_residual_n": 9.094947017729282e-13,
+      "gap_residual_m": 1.9205174085702888e-12
+    },
+    {
+      "case": "resolution_space_11",
+      "label": "space细化11",
+      "passed": true,
+      "phases": 32,
+      "strips": 11,
+      "normal_force_n": 2432.406337087799,
+      "te_peak_to_peak_m": 2.597036148121435e-06,
+      "max_pressure_pa": 847596789.0816494,
+      "mean_mesh_stiffness_n_per_m": 575030666.5425754,
+      "force_residual_n": 4.547473508864641e-13,
+      "gap_residual_m": 1.9810114801414565e-12
+    },
+    {
+      "case": "resolution_space_41",
+      "label": "space细化41",
+      "passed": true,
+      "phases": 32,
+      "strips": 41,
+      "normal_force_n": 2432.406337087799,
+      "te_peak_to_peak_m": 2.5956577599153455e-06,
+      "max_pressure_pa": 848052404.488288,
+      "mean_mesh_stiffness_n_per_m": 567175089.706187,
+      "force_residual_n": 4.547473508864641e-13,
+      "gap_residual_m": 1.928352110119652e-12
+    },
+    {
+      "case": "resolution_phase_16",
+      "label": "phase细化16",
+      "passed": true,
+      "phases": 16,
+      "strips": 21,
+      "normal_force_n": 2432.406337087799,
+      "te_peak_to_peak_m": 2.578830390530784e-06,
+      "max_pressure_pa": 843401254.5144632,
+      "mean_mesh_stiffness_n_per_m": 575540042.6095527,
+      "force_residual_n": 4.547473508864641e-13,
+      "gap_residual_m": 1.678830162114473e-12
+    },
+    {
+      "case": "resolution_phase_64",
+      "label": "phase细化64",
+      "passed": true,
+      "phases": 64,
+      "strips": 21,
+      "normal_force_n": 2432.406337087799,
+      "te_peak_to_peak_m": 2.605928747726147e-06,
+      "max_pressure_pa": 848254162.5073862,
+      "mean_mesh_stiffness_n_per_m": 571093180.8845797,
+      "force_residual_n": 9.094947017729282e-13,
+      "gap_residual_m": 1.7976485930929669e-12
+    }
+  ],
+  "cross_case_checks": [
+    {
+      "check": "zero_load",
+      "passed": true,
+      "scope": "检查零载力和压力；不将零载刚度强制为正"
+    },
+    {
+      "check": "misalignment_mirror",
+      "passed": true,
+      "relative_tolerance": 2e-06,
+      "relative_errors": {
+        "approach": 6.449620558974848e-16,
+        "stiffness": 4.1830645303202666e-16,
+        "forces": 1.7430873063313676e-15
+      },
+      "scope": "对称直齿、对称鼓形；翻转齿向条带，齿对顺序不变"
+    },
+    {
+      "check": "material_load_similarity",
+      "passed": true,
+      "relative_tolerance": 2e-06,
+      "relative_errors": {
+        "approach": 3.022617259560364e-16,
+        "stiffness": 5.268209747982328e-16,
+        "pressure": 5.848129140684228e-07
+      },
+      "modulus_and_torque_factor": 1.4
+    },
+    {
+      "check": "geometry_similarity",
+      "passed": true,
+      "relative_tolerance": 2e-06,
+      "relative_errors": {
+        "approach": 1.5566182551710428e-10,
+        "angular_te": 1.5566190134172885e-10,
+        "stiffness": 6.4230451748388385e-09,
+        "pressure": 7.331943331455697e-07
+      },
+      "length_factor": 1.7,
+      "torque_factor": 4.912999999999999,
+      "scope": "长度及修形乘s、扭矩乘s³；压力相同、位移及刚度乘s、角度TE相同"
+    }
+  ],
+  "resolution": {
+    "performed": true,
+    "relative_tolerance": 0.02,
+    "scope": "仅28/56直齿组合修形、80 N·m；末两级变化不是模型误差或全参数域误差界",
+    "space": {
+      "levels": [
+        11,
+        21,
+        41
+      ],
+      "fixed": {
+        "phases": 32
+      },
+      "metrics": [
+        {
+          "te_peak_to_peak_m": 2.597036148121435e-06,
+          "max_pressure_pa": 847596789.0816494,
+          "mean_mesh_stiffness_n_per_m": 575030666.5425754
+        },
+        {
+          "te_peak_to_peak_m": 2.5989643215616664e-06,
+          "max_pressure_pa": 848254162.5073862,
+          "mean_mesh_stiffness_n_per_m": 571819496.5452034
+        },
+        {
+          "te_peak_to_peak_m": 2.5956577599153455e-06,
+          "max_pressure_pa": 848052404.488288,
+          "mean_mesh_stiffness_n_per_m": 567175089.706187
+        }
+      ],
+      "last_two_relative_changes": {
+        "te_peak_to_peak_m": 0.0012738819798911857,
+        "max_pressure_pa": 0.00023790749018617871,
+        "mean_mesh_stiffness_n_per_m": 0.008188665058302144
+      },
+      "passed": true
+    },
+    "phase": {
+      "levels": [
+        16,
+        32,
+        64
+      ],
+      "fixed": {
+        "strips": 21
+      },
+      "metrics": [
+        {
+          "te_peak_to_peak_m": 2.578830390530784e-06,
+          "max_pressure_pa": 843401254.5144632,
+          "mean_mesh_stiffness_n_per_m": 575540042.6095527
+        },
+        {
+          "te_peak_to_peak_m": 2.5989643215616664e-06,
+          "max_pressure_pa": 848254162.5073862,
+          "mean_mesh_stiffness_n_per_m": 571819496.5452034
+        },
+        {
+          "te_peak_to_peak_m": 2.605928747726147e-06,
+          "max_pressure_pa": 848254162.5073862,
+          "mean_mesh_stiffness_n_per_m": 571093180.8845797
+        }
+      ],
+      "last_two_relative_changes": {
+        "te_peak_to_peak_m": 0.0026725313079099464,
+        "max_pressure_pa": 0.0,
+        "mean_mesh_stiffness_n_per_m": 0.0012717988673910997
+      },
+      "passed": true
+    }
+  },
+  "physical_or_experimental_validation": false,
+  "python": "3.10.11",
+  "numpy": "1.26.4",
+  "kernel_sha256": {
+    "__init__.py": "a6bf5d04d1fb112226e446bfd293b6b05811489ca813e98e2af54674fc067bc3",
+    "__main__.py": "d7edbd907ef0f1795469903dbd22078d47e204da2a2bf59d9c416d5860882b74",
+    "analysis.py": "d096c5d46fe461da91e783a849e6bf5fe63d55b2cb1f956e76b9ca9417c8d2fc",
+    "config.py": "850f4ca8b125bb986706d18a4c0159eb9e6dbbff3bf3bf3416516b977fe5c946",
+    "contact_pressure.py": "de5b10add5d9784f6f0e6c87d3aab0f33dc02899ac3d7430ba2acadc63cb1bc7",
+    "design.py": "24a73a80f8852d619c2ee7f0c5e7fc59402331491bf49d22d014d6be004593a0",
+    "elasticity.py": "4a3f5ef03b3f51779f3b3daadd386777313e1d710b17e3d813a2f31d1efe2d4c",
+    "extended_contact.py": "a07dda04acba2583ab949aaef19ccb30ee52551367f555cfc3f3da4deb213898",
+    "geometry.py": "c2a543660a675c0fd56137fcd77e3f9b2944ededcbc787fe8319f11927251e76",
+    "hertz.py": "42d176167c94ddccb75e0c12feb1ac4fe7146638ad68c4acf29b350bd6c36aef",
+    "io.py": "a2e89171846d6ffa9a18c4334887ac231b5919065f636778e7d2dc5f4fc9e271",
+    "iso_contact.py": "431b8ce1e7c685070fa710bd6f4e8d1015767238e6504d890a250f7e720a94fb",
+    "plotting.py": "6bd22bb334676cc7cff721695aabf8814168b64b477c5eefa58b2c476166c416",
+    "solver.py": "98437bd348e0f37e20072f5c391654d8a337af69c1dc12be19071501db54399c",
+    "strength.py": "28e9a6cd9b4de68d99edd90d1a4e003085d0e0bb24b89d7cbf1ff982a131993a",
+    "surfaces.py": "1f0a582d451f0d4a6c57e0e9b0fae416af92ddaf678b226a489a0c6d9df5b05a"
+  },
+  "tool_sha256": "04ae99d01bd82bb70c076b6ec84bbdfb70790ff6424c805eb61c1f86db4f5f8f",
+  "elapsed_seconds": 42.64116840000497
+}

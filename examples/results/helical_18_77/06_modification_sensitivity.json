@@ -1,0 +1,70 @@
+{
+  "case_id": "helical_18_77",
+  "analysis": "同一案例的附加失准/齿向鼓形敏感性",
+  "scenarios": [
+    {
+      "scenario_id": "baseline",
+      "label": "原案例",
+      "additional_misalignment_m": 0.0,
+      "additional_pinion_lead_crown_m": 0.0,
+      "mean_normal_approach_m": 1.106704538970959e-06,
+      "te_peak_to_peak_m": 3.413391302066878e-08,
+      "mean_mesh_stiffness_n_per_m": 220932698.26774472,
+      "max_endpoint_pressure_pa": 186674381.6606236,
+      "normal_force_n": 152.50694484551857,
+      "max_force_residual_n": 2.842170943040401e-14,
+      "max_gap_residual_m": 5.393460842649951e-13,
+      "all_converged": true,
+      "config_file": "sensitivity/baseline/analysis_config.json",
+      "ltca_directory": "sensitivity/baseline/ltca"
+    },
+    {
+      "scenario_id": "additional_misalignment",
+      "label": "附加1 μm失准",
+      "additional_misalignment_m": 1e-06,
+      "additional_pinion_lead_crown_m": 0.0,
+      "mean_normal_approach_m": 1.0980223382028763e-06,
+      "te_peak_to_peak_m": 3.8337597327243585e-08,
+      "mean_mesh_stiffness_n_per_m": 213019232.4887758,
+      "max_endpoint_pressure_pa": 192670563.38726726,
+      "normal_force_n": 152.50694484551857,
+      "max_force_residual_n": 2.842170943040401e-14,
+      "max_gap_residual_m": 7.687684628393998e-13,
+      "all_converged": true,
+      "config_file": "sensitivity/additional_misalignment/analysis_config.json",
+      "ltca_directory": "sensitivity/additional_misalignment/ltca"
+    },
+    {
+      "scenario_id": "misalignment_and_crown",
+      "label": "失准 + 0.5 μm鼓形",
+      "additional_misalignment_m": 1e-06,
+      "additional_pinion_lead_crown_m": 5e-07,
+      "mean_normal_approach_m": 1.2476155167263622e-06,
+      "te_peak_to_peak_m": 7.633688200401427e-08,
+      "mean_mesh_stiffness_n_per_m": 202737624.54338443,
+      "max_endpoint_pressure_pa": 201672813.73903927,
+      "normal_force_n": 152.50694484551857,
+      "max_force_residual_n": 2.842170943040401e-14,
+      "max_gap_residual_m": 5.11298907816395e-13,
+      "all_converged": true,
+      "config_file": "sensitivity/misalignment_and_crown/analysis_config.json",
+      "ltca_directory": "sensitivity/misalignment_and_crown/ltca"
+    }
+  ],
+  "scenario_count": 3,
+  "display_cycles": 3,
+  "statistics_from_single_period": true,
+  "original_geometry_material_loading_modification_and_boundary_preserved": true,
+  "strength_evaluated": false,
+  "masta_comparison_performed": false,
+  "physical_validation": false,
+  "elapsed_seconds": 9.645601800002623,
+  "files": [
+    "06_modification_sensitivity.csv",
+    "06_sensitivity_cycles.csv",
+    "06_sensitivity_cycle_display.csv",
+    "06_modification_sensitivity.png",
+    "06_modification_sensitivity.svg"
+  ],
+  "scope": "仅本项目LTCA敏感性分析；TE、刚度和端点峰压分别比较，不继承对标状态，不作最优性结论。"
+}

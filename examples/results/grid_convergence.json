@@ -1,0 +1,38 @@
+{
+  "status": "末两级指标变化达标",
+  "fixed_phases": 32,
+  "levels": [
+    {
+      "strips": 11,
+      "te_peak_to_peak_um": 2.597036148121435,
+      "mean_approach_um": 7.042308582455287,
+      "maximum_pressure_mpa": 847.5967890816494,
+      "mean_stiffness_n_per_um": 575.0306665425753,
+      "normal_force_n": 2432.4063370877984
+    },
+    {
+      "strips": 21,
+      "te_peak_to_peak_um": 2.5989643215616662,
+      "mean_approach_um": 7.045186108409014,
+      "maximum_pressure_mpa": 848.2541625073862,
+      "mean_stiffness_n_per_um": 571.8194965452034,
+      "normal_force_n": 2432.4063370877993
+    },
+    {
+      "strips": 41,
+      "te_peak_to_peak_um": 2.5956577599153454,
+      "mean_approach_um": 7.043917210541429,
+      "maximum_pressure_mpa": 848.0524044882881,
+      "mean_stiffness_n_per_um": 567.175089706187,
+      "normal_force_n": 2432.4063370877993
+    }
+  ],
+  "passed": true,
+  "relative_tolerance": 0.02,
+  "last_two_relative_changes": {
+    "te_peak_to_peak_um": 0.001273881979891161,
+    "maximum_pressure_mpa": 0.0002379074901861979,
+    "mean_stiffness_n_per_um": 0.008188665058302024
+  },
+  "interpretation": "只评价所列工况与指标的空间离散敏感性，不代表物理模型误差"
+}

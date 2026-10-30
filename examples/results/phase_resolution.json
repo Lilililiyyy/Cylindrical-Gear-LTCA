@@ -1,0 +1,99 @@
+{
+  "status": "末两级指标变化达标",
+  "passed": true,
+  "relative_tolerance": 0.02,
+  "fixed_strips": 21,
+  "phase_counts": [
+    16,
+    32,
+    64
+  ],
+  "input": {
+    "pair": {
+      "pinion": {
+        "teeth": 28,
+        "normal_module_m": 0.0025,
+        "face_width_m": 0.025,
+        "pressure_angle_rad": 0.3490658503988659,
+        "helix_angle_rad": 0.0,
+        "profile_shift": 0.0,
+        "internal": false,
+        "tip_diameter_m": null,
+        "root_diameter_m": null,
+        "root_form_diameter_m": null,
+        "tip_form_diameter_m": null
+      },
+      "wheel": {
+        "teeth": 56,
+        "normal_module_m": 0.0025,
+        "face_width_m": 0.025,
+        "pressure_angle_rad": 0.3490658503988659,
+        "helix_angle_rad": -0.0,
+        "profile_shift": 0.0,
+        "internal": false,
+        "tip_diameter_m": null,
+        "root_diameter_m": null,
+        "root_form_diameter_m": null,
+        "tip_form_diameter_m": null
+      },
+      "center_distance_m": 0.10500000000000001,
+      "axial_offset_m": 0.0
+    },
+    "torque_n_m": 80,
+    "material": {
+      "youngs_modulus_pa": 210000000000.0,
+      "poisson_ratio": 0.3
+    },
+    "modification_pinion": {
+      "profile_crown_m": 0.0,
+      "lead_crown_m": 8e-06,
+      "profile_slope_m": 0.0,
+      "lead_slope_m": 0.0,
+      "bias_m": 0.0,
+      "tip_relief_m": 6e-06,
+      "tip_start": 0.72,
+      "root_relief_m": 3e-06,
+      "root_end": 0.18,
+      "end_relief_m": 0.0,
+      "end_fraction": 0.1
+    }
+  },
+  "results": [
+    {
+      "phases": 16,
+      "te_peak_to_peak_um": 2.578830390530784,
+      "mean_approach_um": 6.997635797757037,
+      "maximum_pressure_mpa": 843.4012545144632,
+      "mean_stiffness_n_per_um": 575.5400426095528,
+      "normal_force_n": 2432.4063370877993,
+      "force_residual_n": 4.547473508864641e-13,
+      "gap_residual_m": 1.678830162114473e-12
+    },
+    {
+      "phases": 32,
+      "te_peak_to_peak_um": 2.5989643215616662,
+      "mean_approach_um": 7.045186108409014,
+      "maximum_pressure_mpa": 848.2541625073862,
+      "mean_stiffness_n_per_um": 571.8194965452034,
+      "normal_force_n": 2432.4063370877993,
+      "force_residual_n": 9.094947017729282e-13,
+      "gap_residual_m": 1.678830162114473e-12
+    },
+    {
+      "phases": 64,
+      "te_peak_to_peak_um": 2.6059287477261472,
+      "mean_approach_um": 7.061598948795539,
+      "maximum_pressure_mpa": 848.2541625073862,
+      "mean_stiffness_n_per_um": 571.0931808845796,
+      "normal_force_n": 2432.4063370877993,
+      "force_residual_n": 9.094947017729282e-13,
+      "gap_residual_m": 1.7976485930929669e-12
+    }
+  ],
+  "last_two_relative_changes": {
+    "te_peak_to_peak_um": 0.0026725313079100687,
+    "maximum_pressure_mpa": 0.0,
+    "mean_stiffness_n_per_um": 0.0012717988673910394
+  },
+  "interpretation": "只评价所列工况与指标的相位敏感性，不代表全参数域或物理模型误差"
+}
