@@ -1,8 +1,21 @@
 # Cylindrical Gear LTCA
 
-[中文](README.md) | [English](README.en.md)
+[中文](README.md) · **English**
+
+[![Python](https://img.shields.io/badge/Python-3.10%2B-3776ab?logo=python&logoColor=white)](https://www.python.org/) [![License: AGPL-3.0-only](https://img.shields.io/badge/License-AGPL--3.0--only-blue.svg)](LICENSE)
+
 
 A Python calculation kernel for involute cylindrical gear geometry, strength rating and quasi-static loaded tooth contact analysis (LTCA). MASTA is used only for numerical benchmarking.
+
+## Contents
+
+- [Installation and use](#installation-and-use)
+- [Capabilities](#capabilities)
+- [Current case and reproduction](#current-case-and-reproduction)
+- [Verification](#verification)
+- [Scope](#scope)
+- [Updates and roadmap](#updates-and-roadmap)
+- [Repository layout](#repository-layout)
 
 ## Installation and use
 
@@ -146,4 +159,6 @@ Equations and assumptions are described in the [model documentation](docs/model.
 
 ## Repository layout
 
-`gear_contact/` contains the calculation and post-processing modules; `examples/` contains inputs and runnable workflows, with selected results in `examples/results/`; `docs/` contains model and interface documentation; `tests/` and `.github/` run verification. Released under the [MIT licence](LICENSE).
+This project is licensed under [AGPL-3.0-only](LICENSE). For proprietary or closed-source integration, [contact the author](https://github.com/Lilililiyyy) to discuss a commercial license.
+
+`gear_contact/` contains the calculation and post-processing modules; `examples/` contains inputs and runnable workflows, with selected results in `examples/results/`; `docs/` contains model and interface documentation; `tests/` and `.github/` run verification. 
