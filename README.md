@@ -157,4 +157,4 @@ python -B -m unittest discover -s tests -v
 
 本项目采用 [AGPL-3.0-only](LICENSE)。如需闭源集成，可[联系作者](https://github.com/Lilililiyyy)获取商业授权。
 
-`gear_contact/` 为计算与后处理模块；`examples/` 为输入及运行脚本，`examples/results/` 为精选结果；`docs/` 为模型与接口说明；`tests/` 和 `.github/` 执行验证。采用 [MIT许可](LICENSE)。
+`gear_contact/` 为计算与后处理模块；`examples/` 为输入及运行脚本，`examples/results/` 为精选结果；`docs/` 为模型与接口说明；`tests/` 和 `.github/` 执行验证。
