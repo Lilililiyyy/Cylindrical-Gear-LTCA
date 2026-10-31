@@ -161,4 +161,4 @@ Equations and assumptions are described in the [model documentation](docs/model.
 
 This project is licensed under [AGPL-3.0-only](LICENSE). For proprietary or closed-source integration, [contact the author](https://github.com/Lilililiyyy) to discuss a commercial license.
 
-`gear_contact/` contains the calculation and post-processing modules; `examples/` contains inputs and runnable workflows, with selected results in `examples/results/`; `docs/` contains model and interface documentation; `tests/` and `.github/` run verification. Released under the [MIT licence](LICENSE).
+`gear_contact/` contains the calculation and post-processing modules; `examples/` contains inputs and runnable workflows, with selected results in `examples/results/`; `docs/` contains model and interface documentation; `tests/` and `.github/` run verification. 
