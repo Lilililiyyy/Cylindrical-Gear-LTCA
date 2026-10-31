@@ -4,7 +4,6 @@
 
 [![Python](https://img.shields.io/badge/Python-3.10%2B-3776ab?logo=python&logoColor=white)](https://www.python.org/) [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-[中文](README.md) | [English](README.en.md)
 
 渐开线圆柱齿轮几何、标准强度与准静态承载齿面接触分析的独立 Python 计算内核。MASTA仅用于本项目的数值对标。
 
@@ -157,3 +156,6 @@ python -B -m unittest discover -s tests -v
 ## 文件组织
 
 `gear_contact/` 为计算与后处理模块；`examples/` 为输入及运行脚本，`examples/results/` 为精选结果；`docs/` 为模型与接口说明；`tests/` 和 `.github/` 执行验证。采用 [MIT许可](LICENSE)。
+
+
+源码来源审查（初步）：[查看三个项目的来源线索与审查边界](https://github.com/Lilililiyyy/gear-transmission-skills/blob/docs/unified-readme-2026/docs/source-provenance-review.md)。
