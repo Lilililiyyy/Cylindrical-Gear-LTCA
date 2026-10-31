@@ -1,8 +1,22 @@
 # Cylindrical Gear LTCA
 
+[中文](README.md) · [English](README.en.md)
+
+[![Python](https://img.shields.io/badge/Python-3.10%2B-3776ab?logo=python&logoColor=white)](https://www.python.org/) [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+
 [中文](README.md) | [English](README.en.md)
 
 渐开线圆柱齿轮几何、标准强度与准静态承载齿面接触分析的独立 Python 计算内核。MASTA仅用于本项目的数值对标。
+
+## 目录
+
+- [安装与调用](#安装与调用)
+- [计算能力](#计算能力)
+- [当前案例与复算](#当前案例与复算)
+- [验证与复算](#验证与复算)
+- [适用范围](#适用范围)
+- [更新记录与后续计划](#更新记录与后续计划)
+- [文件组织](#文件组织)
 
 ## 安装与调用
 
