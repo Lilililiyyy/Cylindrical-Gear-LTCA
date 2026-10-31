@@ -4,7 +4,6 @@
 
 [![Python](https://img.shields.io/badge/Python-3.10%2B-3776ab?logo=python&logoColor=white)](https://www.python.org/) [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-[中文](README.md) | [English](README.en.md)
 
 A Python calculation kernel for involute cylindrical gear geometry, strength rating and quasi-static loaded tooth contact analysis (LTCA). MASTA is used only for numerical benchmarking.
 
@@ -161,3 +160,6 @@ Equations and assumptions are described in the [model documentation](docs/model.
 ## Repository layout
 
 `gear_contact/` contains the calculation and post-processing modules; `examples/` contains inputs and runnable workflows, with selected results in `examples/results/`; `docs/` contains model and interface documentation; `tests/` and `.github/` run verification. Released under the [MIT licence](LICENSE).
+
+
+Preliminary source provenance review: [see the findings and review limitations across all three projects](https://github.com/Lilililiyyy/gear-transmission-skills/blob/docs/unified-readme-2026/docs/source-provenance-review.md).
