@@ -2,8 +2,7 @@
 
 [中文](README.md) · **English**
 
-[![Python](https://img.shields.io/badge/Python-3.10%2B-3776ab?logo=python&logoColor=white)](https://www.python.org/) [![License: AGPL-3.0-only](https://img.shields.io/badge/License-AGPL--3.0--only-blue.svg)](LICENSE)
-
+[![Python](https://img.shields.io/badge/Python-3.10%2B-3776ab?logo=python&logoColor=white)](https://www.python.org/) [![License: AGPL-3.0-only](https://img.shields.io/badge/License-AGPL--3.0--only-blue.svg)](LICENSE) [![Library Version](https://img.shields.io/badge/version-0.2.1-blue)](https://github.com/Lilililiyyy/Cylindrical-Gear-LTCA)
 
 A Python calculation kernel for involute cylindrical gear geometry, strength rating and quasi-static loaded tooth contact analysis (LTCA). MASTA is used only for numerical benchmarking.
 
@@ -46,34 +45,32 @@ Inputs and results use SI units: m, N, Pa, rad and N·m. Positive modification r
 
 ## Capabilities
 
-|Module|Capabilities|
-|---|---|
-|Geometry and meshing|Internal/external and spur/helical meshes, profile shifts, reference and base circles, centre distance, active profile limits, contact ratios and discretized contact lines|
-|Microgeometry and boundaries|Lead/profile crowning, slopes, tip/root relief, end relief, bias, combined measured deviations, axial offsets and prescribed misalignment|
-|Strength rating|ISO 6336:2006 contact/root stresses and safety factors, with rating factors supplied by the user|
-|Elasticity|Variable-section tooth beams with local Hertz indentation; optional ISO 6336 total tooth-pair stiffness and Love strip influences|
-|Extended contact|Tooth-tip extension geometry, additional gaps and contact-domain checks|
-|LTCA|Contact load sharing, transmission error, mesh stiffness, contact pressure and contact half-width|
-|Design and data|Multiple operating conditions, parameter sweeps, Pareto screening, JSON/NPZ/CSV data and PNG/SVG plots|
-
-Strength calculations require rating factors and material stress limits. See the [model documentation](docs/model.md) for model choices, parameter definitions and scope.
+| Module                       | Capabilities                                                                                                                                                                |
+| ---------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Geometry and meshing         | Internal/external and spur/helical meshes, profile shifts, reference and base circles, centre distance, active profile limits, contact ratios and discretized contact lines |
+| Microgeometry and boundaries | Lead/profile crowning, slopes, tip/root relief, end relief, bias, combined measured deviations, axial offsets and prescribed misalignment                                   |
+| Strength rating              | ISO 6336:2006 contact/root stresses and safety factors, with rating factors supplied by the user                                                                            |
+| Elasticity                   | Variable-section tooth beams with local Hertz indentation; optional ISO 6336 total tooth-pair stiffness and Love strip influences                                           |
+| Extended contact             | Tooth-tip extension geometry, additional gaps and contact-domain checks                                                                                                     |
+| LTCA                         | Contact load sharing, transmission error, mesh stiffness, contact pressure and contact half-width                                                                           |
+| Design and data              | Multiple operating conditions, parameter sweeps, Pareto screening, JSON/NPZ/CSV data and PNG/SVG plots                                                                      |
 
 ## Current case and reproduction
 
 An 18/77 external helical gear pair is used to compare geometry, strength, LTCA and contact pressure with MASTA.
 
-|Input|Value|
-|---|---:|
-|Tooth counts|18 / 77|
-|Normal module|2 mm|
-|Face width|24 mm|
-|Normal pressure angle|22.5°|
-|Helix angle magnitude|23.5°, opposite hands|
-|Profile shifts|+0.3268 / −0.3268|
-|Centre distance|103.5919 mm|
-|Material|E=207 GPa, ν=0.3|
-|Nominal pinion torque|1.718873 N·m|
-|LTCA torque|2.536165 N·m|
+| Input                 | Value                 |
+| --------------------- | ---------------------:|
+| Tooth counts          | 18 / 77               |
+| Normal module         | 2 mm                  |
+| Face width            | 24 mm                 |
+| Normal pressure angle | 22.5°                 |
+| Helix angle magnitude | 23.5°, opposite hands |
+| Profile shifts        | +0.3268 / −0.3268     |
+| Centre distance       | 103.5919 mm           |
+| Material              | E=207 GPa, ν=0.3      |
+| Nominal pinion torque | 1.718873 N·m          |
+| LTCA torque           | 2.536165 N·m          |
 
 ```bash
 python -B examples/run_cylindrical_workflow.py examples/helical_18_77_case.json --reference examples/helical_18_77_reference.json --output output/helical_18_77 --plots
@@ -93,12 +90,12 @@ The comparison covers reference/base diameters, centre distance, contact/root st
 
 This case uses ISO total stiffness, Love strip influences and tooth-tip extension. Both calculations use the same load and working flank, with 32 mesh positions per period and 40 strips per contact line. One steady-state period is displayed over three periods; the statistics below use a single period.
 
-|Cycle metric|MASTA|This project|Relative difference|
-|---|---:|---:|---:|
-|Mean normal TE / μm|1.106705|1.106705|<0.001%|
-|Peak-to-peak TE / μm|0.034134|0.034134|<0.001%|
-|Mean normal stiffness / N/μm|220.932698|220.932698|<0.001%|
-|Maximum contact pressure / MPa|186.674352|186.674382|<0.001%|
+| Cycle metric                   | MASTA      | This project | Relative difference |
+| ------------------------------ | ----------:| ------------:| -------------------:|
+| Mean normal TE / μm            | 1.106705   | 1.106705     | <0.001%             |
+| Peak-to-peak TE / μm           | 0.034134   | 0.034134     | <0.001%             |
+| Mean normal stiffness / N/μm   | 220.932698 | 220.932698   | <0.001%             |
+| Maximum contact pressure / MPa | 186.674352 | 186.674382   | <0.001%             |
 
 Full values are available in the [comparison table](examples/results/helical_18_77/comparison.csv).
 
@@ -122,11 +119,11 @@ Geometry, material, load, existing modifications and prescribed boundaries are r
 
 ![Misalignment and crowning sensitivity for the 18/77 pair](examples/results/helical_18_77/en/06_modification_sensitivity.png)
 
-|Metric|Baseline|Additional misalignment|Misalignment + additional crowning|
-|---|---:|---:|---:|
-|Peak-to-peak TE / μm|0.034134|0.038338|0.076337|
-|Mean stiffness / N/μm|220.933|213.019|202.738|
-|Endpoint peak pressure / MPa|186.674|192.671|201.673|
+| Metric                       | Baseline | Additional misalignment | Misalignment + additional crowning |
+| ---------------------------- | --------:| -----------------------:| ----------------------------------:|
+| Peak-to-peak TE / μm         | 0.034134 | 0.038338                | 0.076337                           |
+| Mean stiffness / N/μm        | 220.933  | 213.019                 | 202.738                            |
+| Endpoint peak pressure / MPa | 186.674  | 192.671                 | 201.673                            |
 
 All three alternatives are calculated by this project. Additional crowning increases both TE variation and peak pressure in this operating condition; modification selection depends on load, misalignment and existing microgeometry.
 
@@ -155,8 +152,11 @@ Equations and assumptions are described in the [model documentation](docs/model.
 - **0.2.1 · 2026-11-02**: Share contact display code between ordinary cases and benchmarks; distinguish the actual meshing interval from the full involute range, retain finite centre-cell display support, and add common-scale comparisons and hash-verified replotting. Solver formulas, raw pressure and PPTE remain unchanged.
 
 - **0.1.0**: Involute cylindrical gear geometry, modifications, tooth-beam elasticity, Hertz contact, LTCA and comparison of operating conditions.
+
 - **0.2.0**: ISO total stiffness and Love strip influences, tooth-tip extension, ISO 6336:2006 explicit-factor strength rating, and the 18/77 MASTA benchmark with three-period curves, contact pressure and misalignment/crowning sensitivity; Chinese and English documentation and figures.
+
 - **Near-term plans**: More internal-mesh and edge-contact cases, mesh and phase convergence studies, and independent 3D contact and experimental validation.
+
 - **Further extensions**: Coupled finite-tooth, gear-body and support compliance, more complete standard rating-factor and material-life calculations, and parametric microgeometry optimization. These items are planned capabilities.
 
 ## Repository layout
