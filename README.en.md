@@ -152,6 +152,8 @@ Equations and assumptions are described in the [model documentation](docs/model.
 
 ## Updates and roadmap
 
+- **0.2.1 · 2026-11-02**: Share contact display code between ordinary cases and benchmarks; distinguish the actual meshing interval from the full involute range, retain finite centre-cell display support, and add common-scale comparisons and hash-verified replotting. Solver formulas, raw pressure and PPTE remain unchanged.
+
 - **0.1.0**: Involute cylindrical gear geometry, modifications, tooth-beam elasticity, Hertz contact, LTCA and comparison of operating conditions.
 - **0.2.0**: ISO total stiffness and Love strip influences, tooth-tip extension, ISO 6336:2006 explicit-factor strength rating, and the 18/77 MASTA benchmark with three-period curves, contact pressure and misalignment/crowning sensitivity; Chinese and English documentation and figures.
 - **Near-term plans**: More internal-mesh and edge-contact cases, mesh and phase convergence studies, and independent 3D contact and experimental validation.
