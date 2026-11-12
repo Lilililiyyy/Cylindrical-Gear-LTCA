@@ -1,5 +1,13 @@
 name: 当前案例检查
-on: [push, pull_request, workflow_dispatch]
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      convergence:
+        description: 执行完整空间与相位收敛矩阵
+        type: boolean
+        default: false
 permissions:
   contents: read
 jobs:
@@ -28,5 +36,41 @@ jobs:
         run: python -B examples/validate_cases.py --output output/ci_case_validation --quick
       - name: MASTA案例对标
         run: python -B examples/run_benchmarks.py --output output/ci_masta --require-common-match
+      - name: 固定版本响应回归
+        run: python -B examples/response_regression.py --output output/ci_response_regression --require-match
+      - name: 收敛矩阵流程检查
+        run: python -B examples/check_convergence_matrix.py --output output/ci_convergence_smoke --quick
       - name: 单案例几何、显式因子强度与配准LTCA复算
         run: python -B examples/run_cylindrical_workflow.py --output output/ci_helical_18_77
+      - name: 保存响应回归与收敛流程记录
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: response-and-convergence-smoke
+          path: |
+            output/ci_response_regression/
+            output/ci_convergence_smoke/
+  convergence:
+    if: github.event_name == 'workflow_dispatch' && inputs.convergence
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      PYTHONUTF8: "1"
+      PYTHONDONTWRITEBYTECODE: "1"
+      OPENBLAS_NUM_THREADS: "1"
+      OMP_NUM_THREADS: "1"
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - name: 安装数值依赖
+        run: python -m pip install -c constraints.txt -e .
+      - name: 正式空间与相位收敛检查
+        run: python -B examples/check_convergence_matrix.py --output output/convergence_matrix --require-convergence
+      - name: 保留全部层级与失败工况
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: convergence-matrix
+          path: output/convergence_matrix/

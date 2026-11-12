@@ -2,7 +2,7 @@
 
 [中文](README.md) · **English**
 
-[![Python](https://img.shields.io/badge/Python-3.10%2B-3776ab?logo=python&logoColor=white)](https://www.python.org/) [![License: AGPL-3.0-only](https://img.shields.io/badge/License-AGPL--3.0--only-blue.svg)](LICENSE) [![Library Version](https://img.shields.io/badge/version-0.2.1-blue)](https://github.com/Lilililiyyy/Cylindrical-Gear-LTCA)
+[![Python](https://img.shields.io/badge/Python-3.10%2B-3776ab?logo=python&logoColor=white)](https://www.python.org/) [![License: AGPL-3.0-only](https://img.shields.io/badge/License-AGPL--3.0--only-blue.svg)](LICENSE) [![Library Version](https://img.shields.io/badge/version-0.3.0-blue)](https://github.com/Lilililiyyy/Cylindrical-Gear-LTCA)
 
 A Python calculation kernel for involute cylindrical gear geometry, strength rating and quasi-static loaded tooth contact analysis (LTCA). MASTA is used only for numerical benchmarking.
 
@@ -129,6 +129,8 @@ All three alternatives are calculated by this project. Additional crowning incre
 
 ## Verification
 
+0.3.0 增加固定版本响应回归及空间／相位收敛矩阵，调用方法、状态边界和压力指标见[第一轮验证说明](docs/first_round_validation.md)。
+
 ```bash
 python -B examples/run_examples.py --output output/full
 python -B examples/validate_cases.py --output output/case_validation
@@ -148,6 +150,8 @@ Strength ratings and local LTCA contact pressure are assessed separately. Valida
 Equations and assumptions are described in the [model documentation](docs/model.md). Functions, units and array layouts are described in the [interface documentation](docs/api.md). These detailed documents are currently in Chinese.
 
 ## Updates and roadmap
+
+- **0.3.0 · 2026-11-12**：新增实际重算的固定版本响应回归及多工况空间／相位收敛矩阵；设计比较支持显式中心／端点压力选择，并贯穿约束、Pareto与图表。默认计算公式及中心压力模式保持兼容；数值回归、原组件对标与物理验证分别记录。
 
 - **0.2.1 · 2026-11-02**: Share contact display code between ordinary cases and benchmarks; distinguish the actual meshing interval from the full involute range, retain finite centre-cell display support, and add common-scale comparisons and hash-verified replotting. Solver formulas, raw pressure and PPTE remain unchanged.
 
