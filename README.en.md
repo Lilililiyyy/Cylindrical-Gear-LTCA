@@ -2,7 +2,7 @@
 
 [中文](README.md) · **English**
 
-[![Python](https://img.shields.io/badge/Python-3.10%2B-3776ab?logo=python&logoColor=white)](https://www.python.org/) [![License: AGPL-3.0-only](https://img.shields.io/badge/License-AGPL--3.0--only-blue.svg)](LICENSE) [![Library Version](https://img.shields.io/badge/version-0.4.0-blue)](CHANGELOG.md)
+[![Python](https://img.shields.io/badge/Python-3.10%2B-3776ab?logo=python&logoColor=white)](https://www.python.org/) [![License: AGPL-3.0-only](https://img.shields.io/badge/License-AGPL--3.0--only-blue.svg)](LICENSE) [![Library Version](https://img.shields.io/badge/version-0.4.0-blue)](#changelog)
 
 A Python calculation kernel for involute cylindrical gear geometry, strength rating and quasi-static loaded tooth contact analysis (LTCA). MASTA is used only for numerical benchmarking.
 
@@ -13,7 +13,7 @@ A Python calculation kernel for involute cylindrical gear geometry, strength rat
 - [Current case and reproduction](#current-case-and-reproduction)
 - [Verification](#verification)
 - [Scope](#scope)
-- [Changelog](CHANGELOG.md)
+- [Changelog](#changelog)
 - [Roadmap](#roadmap)
 - [Repository layout](#repository-layout)
 
@@ -149,6 +149,14 @@ Verification covers internal/external and spur/helical meshes, combined modifica
 Strength ratings and local LTCA contact pressure are assessed separately. Validation currently relies on numerical comparisons; experimental accuracy has not been established.
 
 Equations and assumptions are described in the [model documentation](docs/model.md). Functions, units and array layouts are described in the [interface documentation](docs/api.md). These detailed documents are currently in Chinese.
+
+## Changelog
+
+- **0.4.0 · 2026-11-13**：新增齿轮、阶梯轴与线性轴承准静态耦合，轴系变形反馈至各相位的齿面载荷分配。输出轴节点位移、转角、轴承反力及条带法向位移，支持导出 JSON 后复算。简支梁解析解、刚性极限和原有 10 案响应回归通过。[模型与算例](docs/shaft_bearing_coupling.md)
+- **0.3.0 · 2026-11-12**：新增固定响应回归及空间、相位收敛矩阵。方案比较支持中心或独立端点压力，统一用于压力约束、Pareto 筛选和图表。[验证说明](docs/first_round_validation.md)
+- **0.2.1 · 2026-11-02**：统一通用工况与对标案例的接触图，修正实际啮合范围和中心条带的显示边界。增加统一色标的方案比较和原结果重绘。
+- **0.2.0 · 2026-10-30**：增加 ISO 综合刚度、Love 条带模型、齿顶延伸及 ISO 6336:2006 显式因子强度计算。补充 18/77 工况的 MASTA 对标、三周期曲线、接触压力图和失准／鼓形敏感性结果。该版本于 2026-10-31 改用 AGPL-3.0-only。
+- **0.1.0 · 2026-10-27**：建立渐开线圆柱齿轮几何、齿面修形、齿梁弹性、Hertz 接触、准静态承载接触求解及多工况方案比较。
 
 ## Roadmap
 
