@@ -2,7 +2,7 @@
 
 [中文](README.md) · [English](README.en.md)
 
-[![Python](https://img.shields.io/badge/Python-3.10%2B-3776ab?logo=python&logoColor=white)](https://www.python.org/) [![License: AGPL-3.0-only](https://img.shields.io/badge/License-AGPL--3.0--only-blue.svg)](LICENSE) [![Library Version](https://img.shields.io/badge/version-0.3.0-blue)](https://github.com/Lilililiyyy/Cylindrical-Gear-LTCA)
+[![Python](https://img.shields.io/badge/Python-3.10%2B-3776ab?logo=python&logoColor=white)](https://www.python.org/) [![License: AGPL-3.0-only](https://img.shields.io/badge/License-AGPL--3.0--only-blue.svg)](LICENSE) [![Library Version](https://img.shields.io/badge/version-0.4.0-blue)](CHANGELOG.md)
 
 渐开线圆柱齿轮几何、标准强度与准静态承载齿面接触分析的独立 Python 计算内核。MASTA仅用于本项目的数值对标。
 
@@ -13,7 +13,8 @@
 - [当前案例与复算](#当前案例与复算)
 - [验证与复算](#验证与复算)
 - [适用范围](#适用范围)
-- [更新记录与后续计划](#更新记录与后续计划)
+- [更新记录](CHANGELOG.md)
+- [后续计划](#后续计划)
 - [文件组织](#文件组织)
 
 ## 安装与调用
@@ -147,17 +148,7 @@ python -B -m unittest discover -s tests -v
 
 内置齿梁模式可加入两根阶梯轴和刚性箱体上的线性轴承。计算会联立轴系变形与齿面载荷分配，并保存各相位的轴承反力、节点位移和转角。[轴系耦合及可复算示例](docs/shaft_bearing_coupling.md)
 
-## 更新记录与后续计划
-
-- **2026-11-12 · 主分支更新**：新增齿轮—轴—轴承准静态耦合。两根阶梯轴与刚性箱体上的线性轴承参与各相位的齿面载荷分配。输出节点位移、转角、轴承反力及条带法向位移。简支梁解析解、刚性极限、109 项测试及原有 10 案响应回归通过。[模型与复算算例](docs/shaft_bearing_coupling.md)
-
-- **0.3.0 · 2026-11-12**：新增实际重算的固定版本响应回归及多工况空间／相位收敛矩阵；设计比较支持显式中心／端点压力选择，并贯穿约束、Pareto与图表。默认计算公式及中心压力模式保持兼容；数值回归、原组件对标与物理验证分别记录。
-
-- **0.2.1 · 2026-11-02**：统一通用工况与案例对标的接触显示实现；修正实际啮合区与完整渐开线的范围混用，保留中心单元的有限显示支撑；新增统一色标候选比较及经哈希校验的原结果重绘。计算公式、原始压力和 PPTE 不变。
-
-- **0.1.0**：建立渐开线圆柱齿轮几何、修形、齿梁弹性、Hertz接触、LTCA及多工况方案比较。
-
-- **0.2.0**：增加ISO综合刚度与Love条带模型、齿顶延伸、ISO 6336:2006显式因子强度，以及18/77案例的MASTA对标、三周期曲线、接触压力图和失准／鼓形敏感性；提供中英文说明及图表。
+## 后续计划
 
 - **近期计划**：扩展内啮合与边缘接触案例，完善网格和相位收敛研究，增加独立三维接触与试验验证。
 

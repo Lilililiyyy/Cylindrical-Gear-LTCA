@@ -2,7 +2,7 @@
 
 [中文](README.md) · **English**
 
-[![Python](https://img.shields.io/badge/Python-3.10%2B-3776ab?logo=python&logoColor=white)](https://www.python.org/) [![License: AGPL-3.0-only](https://img.shields.io/badge/License-AGPL--3.0--only-blue.svg)](LICENSE) [![Library Version](https://img.shields.io/badge/version-0.3.0-blue)](https://github.com/Lilililiyyy/Cylindrical-Gear-LTCA)
+[![Python](https://img.shields.io/badge/Python-3.10%2B-3776ab?logo=python&logoColor=white)](https://www.python.org/) [![License: AGPL-3.0-only](https://img.shields.io/badge/License-AGPL--3.0--only-blue.svg)](LICENSE) [![Library Version](https://img.shields.io/badge/version-0.4.0-blue)](CHANGELOG.md)
 
 A Python calculation kernel for involute cylindrical gear geometry, strength rating and quasi-static loaded tooth contact analysis (LTCA). MASTA is used only for numerical benchmarking.
 
@@ -13,7 +13,8 @@ A Python calculation kernel for involute cylindrical gear geometry, strength rat
 - [Current case and reproduction](#current-case-and-reproduction)
 - [Verification](#verification)
 - [Scope](#scope)
-- [Updates and roadmap](#updates-and-roadmap)
+- [Changelog](CHANGELOG.md)
+- [Roadmap](#roadmap)
 - [Repository layout](#repository-layout)
 
 ## Installation and use
@@ -149,17 +150,7 @@ Strength ratings and local LTCA contact pressure are assessed separately. Valida
 
 Equations and assumptions are described in the [model documentation](docs/model.md). Functions, units and array layouts are described in the [interface documentation](docs/api.md). These detailed documents are currently in Chinese.
 
-## Updates and roadmap
-
-- **2026-11-12 · 主分支更新**：新增齿轮—轴—轴承准静态耦合。两根阶梯轴与刚性箱体上的线性轴承参与各相位的齿面载荷分配。输出节点位移、转角、轴承反力及条带法向位移。简支梁解析解、刚性极限、109 项测试及原有 10 案响应回归通过。[模型与复算算例](docs/shaft_bearing_coupling.md)
-
-- **0.3.0 · 2026-11-12**：新增实际重算的固定版本响应回归及多工况空间／相位收敛矩阵；设计比较支持显式中心／端点压力选择，并贯穿约束、Pareto与图表。默认计算公式及中心压力模式保持兼容；数值回归、原组件对标与物理验证分别记录。
-
-- **0.2.1 · 2026-11-02**: Share contact display code between ordinary cases and benchmarks; distinguish the actual meshing interval from the full involute range, retain finite centre-cell display support, and add common-scale comparisons and hash-verified replotting. Solver formulas, raw pressure and PPTE remain unchanged.
-
-- **0.1.0**: Involute cylindrical gear geometry, modifications, tooth-beam elasticity, Hertz contact, LTCA and comparison of operating conditions.
-
-- **0.2.0**: ISO total stiffness and Love strip influences, tooth-tip extension, ISO 6336:2006 explicit-factor strength rating, and the 18/77 MASTA benchmark with three-period curves, contact pressure and misalignment/crowning sensitivity; Chinese and English documentation and figures.
+## Roadmap
 
 - **Near-term plans**: More internal-mesh and edge-contact cases, mesh and phase convergence studies, and independent 3D contact and experimental validation.
 

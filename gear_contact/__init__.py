@@ -17,4 +17,4 @@ from .iso_contact import ISOContactSettings, iso_single_tooth_stiffness, build_i
 from .extended_contact import ExtendedContactSettings, extended_contact_grid
 from .shaft import LinearBearing, Shaft, ShaftSegment, ShaftSystem, solve_shaft
 
-__version__ = "0.3.0"
+__version__ = "0.4.0"
