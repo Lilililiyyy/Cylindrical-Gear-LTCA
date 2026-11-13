@@ -143,13 +143,15 @@ Verification covers internal/external and spur/helical meshes, combined modifica
 
 ## Scope
 
-Contact analysis assumes small deformation, linear elasticity, no friction and quasi-static loading. The current models do not include complete gear-body, shaft or bearing deformation, lubrication, temperature rise, fatigue life or dynamic noise.
+接触分析采用小变形、线弹性、无摩擦、准静态假设。内置齿梁模式可选用阶梯轴与线性轴承耦合，适用于刚性轮体和刚性箱体。润滑、温升、疲劳寿命和动态噪声超出当前计算范围。
 
 Strength ratings and local LTCA contact pressure are assessed separately. Validation currently relies on numerical comparisons; experimental accuracy has not been established.
 
 Equations and assumptions are described in the [model documentation](docs/model.md). Functions, units and array layouts are described in the [interface documentation](docs/api.md). These detailed documents are currently in Chinese.
 
 ## Updates and roadmap
+
+- **2026-11-12 · 主分支更新**：新增齿轮—轴—轴承准静态耦合。两根阶梯轴与刚性箱体上的线性轴承参与各相位的齿面载荷分配。输出节点位移、转角、轴承反力及条带法向位移。简支梁解析解、刚性极限、109 项测试及原有 10 案响应回归通过。[模型与复算算例](docs/shaft_bearing_coupling.md)
 
 - **0.3.0 · 2026-11-12**：新增实际重算的固定版本响应回归及多工况空间／相位收敛矩阵；设计比较支持显式中心／端点压力选择，并贯穿约束、Pareto与图表。默认计算公式及中心压力模式保持兼容；数值回归、原组件对标与物理验证分别记录。
 
@@ -161,7 +163,7 @@ Equations and assumptions are described in the [model documentation](docs/model.
 
 - **Near-term plans**: More internal-mesh and edge-contact cases, mesh and phase convergence studies, and independent 3D contact and experimental validation.
 
-- **Further extensions**: Coupled finite-tooth, gear-body and support compliance, more complete standard rating-factor and material-life calculations, and parametric microgeometry optimization. These items are planned capabilities.
+- **后续扩展**：有限齿体与轮体柔度、非线性轴承和箱体柔度，更完整的标准评级因子与材料寿命链，以及参数化修形优化。
 
 ## Repository layout
 
